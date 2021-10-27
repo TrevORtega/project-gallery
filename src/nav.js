@@ -1,17 +1,12 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
-const SignUpLogIn = styled.div`
+const NavElement = styled(Link)`
     padding-right: 10px;
     padding-left: 10px;
 
-    &:hover {
-        cursor: pointer;
-    }
-`;
-const Logo = styled.div`
-    padding-left: 10px;
-    padding-right: 10px;
-
+    text-decoration: none;
+    color: white;
     &:hover {
         cursor: pointer;
     }
@@ -31,8 +26,12 @@ export default function Nav(){
     
     return (
         <NavBar>
-            <Logo>Project Gallery</Logo>
-            <SignUpLogIn>Sign Up</SignUpLogIn>
+            <NavElement to="/">
+                Project Gallery
+            </NavElement>
+            <NavElement to="/profile">
+                Profile
+            </NavElement>
         </NavBar>
     );
 }
