@@ -1,6 +1,6 @@
 import logo from './logo.svg';
-import Nav from './Nav.js';
-import Profile from './Profile.js';
+import Nav from './components/nav/Nav.js';
+import Profile from './pages/profile/Profile.js';
 import styled from 'styled-components'
 
 import {
@@ -13,8 +13,8 @@ import {
 
 const StyledApp = styled.div`
   background-color: #282c34;
-  min-height: 100vh;
-  min-width: 100vw;
+  min-height: 100%;
+  min-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,8 +26,8 @@ const StyledApp = styled.div`
 function App() {
   return (
     <div className="App">
-      <StyledApp>
-        <Nav />
+      <StyledApp className="container">
+        <Nav className="nav"/>
         <h3>
           Find Projects from Developers around the World! 
         </h3>

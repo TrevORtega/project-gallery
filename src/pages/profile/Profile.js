@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Nav from './Nav';
+import Nav from '../../components/nav/Nav';
 
 const StyledProfile = styled.div`
     background-color: #282c34;
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

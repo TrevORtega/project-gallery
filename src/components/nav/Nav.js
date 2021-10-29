@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
 const NavElement = styled(Link)`
-    padding-right: 10px;
-    padding-left: 10px;
-
+    width: 12%;
+    min-width: 155px;
+    text-align: center;
     text-decoration: none;
     color: white;
     &:hover {
@@ -13,9 +13,8 @@ const NavElement = styled(Link)`
 `;
 
 const NavBar = styled.div`
-    width: 100%;
-    height: 20%;
-    padding: 10px;
+    min-width: 100%;
+    min-height: 10%;
     display: flex;
     justify-content: space-between;
     background-color: rgb(128, 200, 0);
