@@ -1,38 +1,69 @@
-import logo from './logo.svg';
-import DefaultNav from './components/nav/Nav.js';
-import Profile from './pages/profile/Profile.js';
 import styled from 'styled-components'
-
+import { Row, Form, Button, Stack} from 'react-bootstrap/';
+import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
 
+import DefaultNav from './components/nav/Nav.js';
+import Profile from './pages/profile/Profile.js';
+import SearchResults from './pages/searchResults/SearchResults.js'
+import NoPage from './pages/noPage/NoPage.js'
+import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 
-
-
-const StyledApp = styled.div`
-  height: 100vh;
-  width: 100vw;
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  margin-top: 20vh;
+  margin-bottom: 30vh;
 `;
 
-// CSS for main element here
-const StyledMainContainer = styled.div`
-  text-align: center;
+const StyledMainText = styled.h3`
+
 `;
+
+const Grid = ({ submitFunc }) => {
+  return (
+    <MainContainer fluid={true}>
+      <Row lg={true}>
+        <DefaultNav />
+      </Row>
+      <ContentContainer lg={true}>
+        <StyledForm onSubmit={submitFunc}>
+          <StyledMainText>Find Coding Projects from Developers Around the World!</StyledMainText>
+          <Form.Group>
+            <Stack direction="horizontal">
+              <Form.Control type="text" name="search" size="lg" placeholder="React Web Applications..."/>
+              <Button size="lg" type="submit">Submit</Button>
+            </Stack>
+          </Form.Group>
+        </StyledForm>
+      </ContentContainer>
+    </MainContainer>
+  )
+}
+
 
 function App() {
-  return (
-    <StyledApp>
-      <DefaultNav/>
-      <StyledMainContainer className="container">
-        <h3>
-          Find Projects from Developers around the World! 
-        </h3>
-      </StyledMainContainer>
-    </StyledApp>
+  const [submitQuery, setSubmitQuery] = useState('');
+  const onFormSubmit = e => {
+    e.preventDefault()
+    const formData = new FormData(e.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    return setSubmitQuery(formDataObj.search);
+  }
+  const validSubmit = submitQuery !== '';
+  return ( 
+    validSubmit ? 
+      <SearchResults query={submitQuery} />
+      :
+      <Grid submitFunc={onFormSubmit} />
   );
+    
 }
 
 function RouterApp(){
@@ -45,6 +76,12 @@ function RouterApp(){
           </Route>
           <Route path="/profile">
             <Profile />
+          </Route>
+          <Route path="/search">
+            <SearchResults />
+          </Route>
+          <Route>
+            <NoPage />
           </Route>
         </Switch>
       </div>

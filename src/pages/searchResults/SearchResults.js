@@ -1,26 +1,28 @@
 import styled from 'styled-components';
-import { Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 
 import DefaultNav from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
 
-// CSS for main component for profile page here
-const StyledProfile = styled.div`
+const StyledSearchResultsContainer = styled.div`
     text-align: center;
 `;
 
-const Profile = () => {
+const SearchResults = ({ query }) => {
+    
     return (
         <MainContainer>
             <Row>
                 <DefaultNav />
             </Row>
             <ContentContainer>
-                <StyledProfile>Random Profile</StyledProfile>
+                <StyledSearchResultsContainer>
+                   {"Search Results for: " + query} 
+                </StyledSearchResultsContainer>
             </ContentContainer>
         </MainContainer>
             
     );
 }
 
-export default Profile
+export default SearchResults
