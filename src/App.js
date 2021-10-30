@@ -7,10 +7,10 @@ import {
   Route
 } from "react-router-dom";
 
-import DefaultNav from './components/nav/Nav.js';
-import Profile from './pages/profile/Profile.js';
-import SearchResults from './pages/searchResults/SearchResults.js'
-import NoPage from './pages/noPage/NoPage.js'
+import { DefaultNav } from './components/nav/Nav.js';
+import { Profile } from './pages/profile/Profile.js';
+import { SearchResults } from './pages/searchResults/SearchResults.js'
+import { NoPage } from './pages/noPage/NoPage.js'
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 
 const StyledForm = styled(Form)`

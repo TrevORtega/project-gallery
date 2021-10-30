@@ -1,9 +1,9 @@
-import { Container, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
-import DefaultNav from "../../components/nav/Nav";
+import { DefaultNav } from "../../components/nav/Nav";
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
 
-const NoPage = () => {
+export const NoPage = () => {
     return (
         <MainContainer>
             <Row>
@@ -18,5 +18,3 @@ const NoPage = () => {
             
     );
 }
-
-export default NoPage

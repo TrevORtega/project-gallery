@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { Container, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
-import DefaultNav from '../../components/nav/Nav';
+import { DefaultNav } from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
 
 const StyledSearchResultsContainer = styled.div`
     text-align: center;
 `;
 
-const SearchResults = ({ query }) => {
+export const SearchResults = ({ query }) => {
     
     return (
         <MainContainer>
@@ -24,5 +24,3 @@ const SearchResults = ({ query }) => {
             
     );
 }
-
-export default SearchResults

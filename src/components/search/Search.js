@@ -1,6 +1,6 @@
 import { Redirect } from "react-router-dom";
 
-const Search = ({ searchStr }) => {
+export const Search = ({ searchStr }) => {
     console.log(typeof(searchStr), searchStr); 
     searchStr = searchStr.replace('+', '');
     const url = "?terms=" + searchStr.split(' ').join('+');
@@ -16,5 +16,3 @@ const Search = ({ searchStr }) => {
             
     );
 }
-
-export default Search 

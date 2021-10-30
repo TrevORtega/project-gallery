@@ -6,7 +6,7 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 // Check bootstrap Nav/Navbar docs to change Nav settings
-const DefaultNav = () => {
+export const DefaultNav = () => {
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
             <Container fluid={true}>
@@ -18,5 +18,3 @@ const DefaultNav = () => {
         </StyledNavbar>
     )
 }
-
-export default DefaultNav; 
