@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import Nav from './components/nav/Nav.js';
+import DefaultNav from './components/nav/Nav.js';
 import Profile from './pages/profile/Profile.js';
 import styled from 'styled-components'
 
@@ -9,30 +9,29 @@ import {
   Route
 } from "react-router-dom";
 
-//<img src={logo} className="App-logo" alt="logo" />
+
+
 
 const StyledApp = styled.div`
-  background-color: #282c34;
-  min-height: 100%;
-  min-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
+  width: 100vw;
 `;
 
+// CSS for main element here
+const StyledMainContainer = styled.div`
+  text-align: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <StyledApp className="container">
-        <Nav className="nav"/>
+    <StyledApp>
+      <DefaultNav/>
+      <StyledMainContainer className="container">
         <h3>
           Find Projects from Developers around the World! 
         </h3>
-      </StyledApp>
-    </div>
+      </StyledMainContainer>
+    </StyledApp>
   );
 }
 

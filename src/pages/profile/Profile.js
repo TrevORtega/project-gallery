@@ -1,23 +1,19 @@
 import styled from 'styled-components';
-import Nav from '../../components/nav/Nav';
+import DefaultNav from '../../components/nav/Nav';
 
+// CSS for main component for profile page here
 const StyledProfile = styled.div`
-    background-color: #282c34;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    text-align: center;
 `;
 
 
 const Profile = () => {
     return (
-        <StyledProfile>
-            <Nav />
-            Random Guy
-        </StyledProfile>
+        <>
+            <DefaultNav />
+            <StyledProfile>Random Profile</StyledProfile>
+        </>
+            
     );
 }
 

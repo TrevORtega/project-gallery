@@ -1,36 +1,18 @@
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Navbar, Container, Nav} from 'react-bootstrap/';
 
-const NavElement = styled(Link)`
-    width: 12%;
-    min-width: 155px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    &:hover {
-        cursor: pointer;
-    }
-`;
-
-const NavBar = styled.div`
-    min-width: 100%;
-    min-height: 10%;
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(128, 200, 0);
-
-`;
-
-export default function Nav(){
-    
+// Check bootstrap Nav/Navbar docs to change Nav settings
+const DefaultNav = () => {
     return (
-        <NavBar>
-            <NavElement to="/">
-                Project Gallery
-            </NavElement>
-            <NavElement to="/profile">
-                Profile
-            </NavElement>
-        </NavBar>
-    );
+        <Navbar bg="primary" variant="dark" sticky='top'>
+            <Container>
+            <Navbar.Brand href="/">Project Gallery</Navbar.Brand>
+                <Nav className="justify-content-center">
+                <Nav.Link href="/profile">Profile</Nav.Link>
+            </Nav>
+            </Container>
+        </Navbar>
+    )
 }
+
+export default DefaultNav; 
