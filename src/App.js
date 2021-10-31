@@ -12,6 +12,7 @@ import { Profile } from './pages/profile/Profile.js';
 import { SearchResults } from './pages/searchResults/SearchResults.js'
 import { NoPage } from './pages/noPage/NoPage.js'
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
+import { Login } from './pages/login/Login.js';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -67,21 +68,27 @@ function App() {
 }
 
 function RouterApp(){
+  const [token, setToken] = useState(null);
+  if (!token) {
+    return <Login setToken={setToken} /> 
+  }
+  console.log(token);
+
   return (
     <Router>
       <div>
         <Switch>
           <Route exact path="/">
-            <App />
+            <App isLoggedIn token/>
           </Route>
           <Route path="/profile">
-            <Profile />
+            <Profile token/>
           </Route>
           <Route path="/search">
-            <SearchResults />
+            <SearchResults token/>
           </Route>
           <Route>
-            <NoPage />
+            <NoPage token/>
           </Route>
         </Switch>
       </div>

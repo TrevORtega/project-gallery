@@ -5,6 +5,7 @@ export const MainContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 100vw;
   background-color: rgb(0, 128, 0);
 `;
 

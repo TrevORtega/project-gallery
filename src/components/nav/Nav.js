@@ -6,13 +6,13 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 // Check bootstrap Nav/Navbar docs to change Nav settings
-export const DefaultNav = () => {
+export const DefaultNav = ({ profile=true }) => {
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
             <Container fluid={true}>
                 <Navbar.Brand href="/">Project Gallery</Navbar.Brand>
                     <Nav className="justify-content-center">
-                        <Nav.Link href="/profile">Profile</Nav.Link>
+                        {profile ? <Nav.Link href="/profile">Profile</Nav.Link> : {}}
                     </Nav>
             </Container>
         </StyledNavbar>
