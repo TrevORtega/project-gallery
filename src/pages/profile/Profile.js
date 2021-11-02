@@ -67,7 +67,5 @@ export const Profile = () => {
 	    	</StyledProfile>
             </ContentContainer>
         </MainContainer>
-            
-
     );
 }

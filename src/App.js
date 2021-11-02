@@ -13,6 +13,7 @@ import { SearchResults } from './pages/searchResults/SearchResults.js'
 import { NoPage } from './pages/noPage/NoPage.js'
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 import { Login } from './pages/login/Login.js';
+import { useCookies } from 'react-cookie';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -51,6 +52,7 @@ const Grid = ({ submitFunc }) => {
 
 function App() {
   const [submitQuery, setSubmitQuery] = useState('');
+  
   const onFormSubmit = e => {
     e.preventDefault()
     const formData = new FormData(e.target);
@@ -68,27 +70,27 @@ function App() {
 }
 
 function RouterApp(){
-  const [token, setToken] = useState(null);
-  if (!token) {
-    return <Login setToken={setToken} /> 
+  const [cookies, setCookies] = useCookies(null);
+
+  if (!cookies?.username) {
+    return <Login setCookies={setCookies} /> 
   }
-  console.log(token);
 
   return (
     <Router>
       <div>
         <Switch>
           <Route exact path="/">
-            <App isLoggedIn token/>
+            <App isLoggedIn />
           </Route>
           <Route path="/profile">
-            <Profile token/>
+            <Profile cookies/>
           </Route>
           <Route path="/search">
-            <SearchResults token/>
+            <SearchResults />
           </Route>
           <Route>
-            <NoPage token/>
+            <NoPage />
           </Route>
         </Switch>
       </div>

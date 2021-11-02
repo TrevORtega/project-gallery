@@ -23,7 +23,7 @@ const StyledContentContainer = styled(ContentContainer)`
     justify-content: center;
 `;
 
-export const Login = ({ setToken }) => {
+export const Login = ({ setCookies }) => {
     const [formOptions, setFormOptions] = useState({
         email: '',
         username: '',
@@ -42,7 +42,11 @@ export const Login = ({ setToken }) => {
     }
     const submitHandler = e => {
         e.preventDefault();
-        setToken({...formOptions});
+
+        Object.entries(formOptions).forEach(([key, value]) => {
+            if (key !== 'passowrd' && key !== 'email')
+                setCookies(key, value);
+        });
     }
     return (
         <MainContainer>
