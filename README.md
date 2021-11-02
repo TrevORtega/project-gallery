@@ -46,4 +46,5 @@ npm install react-scripts@latest
 npm install react-bootstrap bootstrap@5.1.3
 npm install --save styled-components
 npm install --save react-router
+npm install --save react-cookie
 ```
