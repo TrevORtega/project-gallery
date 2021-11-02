@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Row, FloatingLabel, Form, Button, Stack } from 'react-bootstrap';
-import { useState } from 'react';
 
 import { DefaultNav } from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
@@ -23,26 +22,24 @@ const StyledContentContainer = styled(ContentContainer)`
     justify-content: center;
 `;
 
-export const Login = ({ setToken }) => {
-    const [formOptions, setFormOptions] = useState({
-        email: '',
-        username: '',
-        password: '',
-        isRecruiter: false
-    })
+export const Login = ({ setCookies }) => {
+    
     const changeHandler = e => {
         e.preventDefault();
+
         if (e.target.name === "password")
             e.target.value = new Array(e.target.value.length + 1).join(' '); 
         else if (e.target.name === "recruiter"){
             e.target.name = "isRecruiter";
             e.target.value = e.target.value === "on";
+            setCookies(e.target.name, e.target.value);
         }
-        setFormOptions({...formOptions, [e.target.name]: e.target.value});
+        else{
+            setCookies(e.target.name, e.target.value);
+        }
     }
     const submitHandler = e => {
         e.preventDefault();
-        setToken({...formOptions});
     }
     return (
         <MainContainer>
@@ -73,17 +70,4 @@ export const Login = ({ setToken }) => {
             </StyledContentContainer>
         </MainContainer>
     );
-}
-
-String.prototype.hashCode = function() {
-    var hash = 0;
-    if (this.length === 0) {
-        return hash;
-    }
-    for (var i = 0; i < this.length; i++) {
-        var char = this.charCodeAt(i);
-        hash = ((hash<<5)-hash)+char;
-        hash = hash & hash; // Convert to 32bit integer
-    }
-    return hash;
 }
