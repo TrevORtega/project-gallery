@@ -19,6 +19,5 @@ export const Profile = () => {
                 <StyledProfile>Random Profile</StyledProfile>
             </ContentContainer>
         </MainContainer>
-            
     );
 }

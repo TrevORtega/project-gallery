@@ -72,7 +72,7 @@ function App() {
 function RouterApp(){
   const [cookies, setCookies] = useCookies(null);
 
-  if (!cookies) {
+  if (!cookies?.username) {
     return <Login setCookies={setCookies} /> 
   }
 
