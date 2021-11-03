@@ -28,11 +28,11 @@ const StyledMainText = styled.h3`
 
 `;
 
-const Grid = ({ submitFunc }) => {
+const Grid = ({ submitFunc, cookies }) => {
   return (
     <MainContainer fluid={true}>
       <Row lg={true}>
-        <DefaultNav />
+        <DefaultNav cookies={cookies} />
       </Row>
       <ContentContainer lg={true}>
         <StyledForm onSubmit={submitFunc}>
@@ -50,7 +50,7 @@ const Grid = ({ submitFunc }) => {
 }
 
 
-function App() {
+const App = ({ cookies }) => {
   const [submitQuery, setSubmitQuery] = useState('');
   
   const onFormSubmit = e => {
@@ -64,7 +64,7 @@ function App() {
     validSubmit ? 
       <SearchResults query={submitQuery} />
       :
-      <Grid submitFunc={onFormSubmit} />
+      <Grid submitFunc={onFormSubmit} cookies={cookies}/>
   );
     
 }
@@ -81,13 +81,13 @@ function RouterApp(){
       <div>
         <Switch>
           <Route exact path="/">
-            <App isLoggedIn />
+            <App cookies={cookies} />
           </Route>
           <Route path="/profile">
-            <Profile cookies/>
+            <Profile cookies={cookies}/>
           </Route>
           <Route path="/search">
-            <SearchResults />
+            <SearchResults cookies={cookies}/>
           </Route>
           <Route>
             <NoPage />

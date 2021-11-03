@@ -40,31 +40,39 @@ const StyledProfile = styled.div`
     }
 `;
 
-export const Profile = () => {
+const DefaultProfile = () => {
+    return (
+        <>
+            <div class="container">
+                <div class = "content">
+                    <h1>Hi! I'm DefaultUser</h1>
+                </div>
+                <div class="thumb">
+                    <img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default photo" />
+                </div>
+            </div>
+            <h3>About</h3>
+            <p></p>
+            <h3>Experience</h3>
+            <p></p>
+            <h3>Education</h3>
+            <p></p>
+            <h3>Projects</h3>
+            <p></p>
+        </>
+    );
+}
+
+export const Profile = ({ cookies }) => {
     return (
         <MainContainer>
             <Row>
-                <DefaultNav />
+                <DefaultNav cookies={cookies} />
             </Row>
             <ContentContainer>
                 <StyledProfile>
-			<div class="container">
-			<div class = "content">
-	    			<h1>Hi! I'm DefaultUser</h1>
-	    		</div>
-	    		<div class="thumb">
-	    			<img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default photo" />
-	    		</div>
-			</div>
-	    <h3>About</h3>
-	    <p></p>
-	    <h3>Experience</h3>
-	    <p></p>
-	    <h3>Education</h3>
-	    <p></p>
-	    <h3>Projects</h3>
-	    <p></p>
-	    	</StyledProfile>
+                    <DefaultProfile />    
+                </StyledProfile>
             </ContentContainer>
         </MainContainer>
     );

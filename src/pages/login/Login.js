@@ -44,14 +44,14 @@ export const Login = ({ setCookies }) => {
         e.preventDefault();
 
         Object.entries(formOptions).forEach(([key, value]) => {
-            if (key !== 'passowrd' && key !== 'email')
+            if (key !== 'password' && key !== 'email')
                 setCookies(key, value);
         });
     }
     return (
         <MainContainer>
             <Row>
-                <DefaultNav profile={true} />
+                <DefaultNav />
             </Row>
             <StyledContentContainer>
                 <StyledLoginForm onChange={changeHandler} onSubmit={submitHandler}>
