@@ -63,11 +63,11 @@ const DefaultProfile = () => {
     );
 }
 
-export const Profile = ({ cookies }) => {
+export const Profile = () => {
     return (
         <MainContainer>
             <Row>
-                <DefaultNav cookies={cookies} />
+                <DefaultNav />
             </Row>
             <ContentContainer>
                 <StyledProfile>

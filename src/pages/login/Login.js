@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { DefaultNav } from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
+import { useCookies } from 'react-cookie';
 
 // CSS for main component for profile page here
 const StyledLoginForm = styled(Form)`
@@ -23,7 +24,8 @@ const StyledContentContainer = styled(ContentContainer)`
     justify-content: center;
 `;
 
-export const Login = ({ setCookies }) => {
+export const Login = () => {
+    const [cookies, setCookies, removeCookie] = useCookies();
     const [formOptions, setFormOptions] = useState({
         email: '',
         username: '',

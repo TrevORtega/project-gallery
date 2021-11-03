@@ -8,12 +8,12 @@ const StyledSearchResultsContainer = styled.div`
     text-align: center;
 `;
 
-export const SearchResults = ({ query, cookies }) => {
+export const SearchResults = ({ query }) => {
     
     return (
         <MainContainer>
             <Row>
-                <DefaultNav cookies={cookies} />
+                <DefaultNav />
             </Row>
             <ContentContainer>
                 <StyledSearchResultsContainer>
