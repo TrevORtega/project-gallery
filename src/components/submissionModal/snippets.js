@@ -1,5 +1,4 @@
 import { Container, Row } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown'
 
 
 export const Snippets = () => {
@@ -8,7 +7,6 @@ export const Snippets = () => {
         <Container fluid>
             <Row>Code</Row>
             <Row>
-                <ReactMarkdown children={mkdown}/>
             </Row>
         </Container>
     );
