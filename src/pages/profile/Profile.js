@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { Row } from 'react-bootstrap';
+import { Row, Button } from 'react-bootstrap';
+import { useState } from 'react';
 
 import { DefaultNav } from '../../components/nav/Nav';
-import { ContentContainer, MainContainer, TestContainer } from '../../components/theme/mainTheme';
+import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
+import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
 import stock from '../../images/default_photo.jpg'
 
 // CSS for main component for profile page here
@@ -48,7 +50,7 @@ const DefaultProfile = () => {
                     <h1>Hi! I'm DefaultUser</h1>
                 </div>
                 <div class="thumb">
-                    <img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default photo" />
+                    <img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default avatar" />
                 </div>
             </div>
             <h3>About</h3>
@@ -63,17 +65,30 @@ const DefaultProfile = () => {
     );
 }
 
+const ProfileContent = ({ setModalMode }) => {
+    return (
+        <ContentContainer>
+            <StyledProfile>
+                <DefaultProfile />    
+                <Button size='sm' onClick={() => setModalMode(true)}>
+                    New Project
+                </Button>
+            </StyledProfile>
+        </ContentContainer>
+    );
+}
+
+
 export const Profile = () => {
+    const [modalMode, setModalMode] = useState(false);
+
     return (
         <MainContainer>
             <Row>
                 <DefaultNav />
             </Row>
-            <ContentContainer>
-                <StyledProfile>
-                    <DefaultProfile />    
-                </StyledProfile>
-            </ContentContainer>
+            {modalMode ? <SubmissionModal />
+                : <ProfileContent setModalMode={setModalMode}/>}
         </MainContainer>
     );
 }
