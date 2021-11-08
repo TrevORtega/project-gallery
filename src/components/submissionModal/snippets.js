@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Col, Container, Dropdown, Row, Form } from 'react-bootstrap';
+import { Col, Container, Dropdown, Row, Form, Button } from 'react-bootstrap';
 import { CopyBlock, dracula } from 'react-code-blocks';
 import styled from 'styled-components';
 
@@ -52,47 +52,68 @@ const CodeForm = ({snippetValues, setSnippetValues}) => {
     );
 }
 
-export const Snippets = () => {
+export const Snippets = ({pages, modalValues, setModalValues}) => {
     const [snippetValues, setSnippetValues] = useState({
         code: '',
         language: 'Choose Language'
     })
 
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const Page = pages[modalValues.state];
+
     const defaultLangauge = 'text';
     const { code, language } = snippetValues;
 
+    const submitFunc = (e) => {
+        e.preventDefault();
+        setModalValues({...snippetValues, state: modalValues.state+1});
+        setIsSubmitted(true);
+    }
     return (
-        <Container fluid>
-            <Row>
-                <Col>
-                    <h3>
-                        Enter a Code Snippet!
-                    </h3>
-                </Col>
-            </Row>
-            <Row>
-                <StyledInputCol>
-                    <LanguageDropdown 
-                        snippetValues={snippetValues}
-                        setSnippetValues={setSnippetValues}
-                    />
-                    <CodeForm 
-                        snippetValues={snippetValues}
-                        setSnippetValues={setSnippetValues}
-                    />
-                </StyledInputCol>
-                <Col>
-                    <CopyBlock
-                        text={code}
-                        language={language == 'Choose Language' ? defaultLangauge : language}
-                        showLineNumbers={true}
-                        startingLineNumber={true}
-                        theme={dracula}
-                        wrapLines
-                    />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            {isSubmitted ? 
+                <Page 
+                    pages={pages}
+                    modalValues={modalValues}
+                    setModalValues={setModalValues}
+                />
+            : (
+            <Container fluid>
+                <Row>
+                    <Col>
+                        <h3>
+                            Enter a Code Snippet!
+                        </h3>
+                    </Col>
+                </Row>
+                <Row>
+                    <StyledInputCol>
+                        <LanguageDropdown 
+                            snippetValues={snippetValues}
+                            setSnippetValues={setSnippetValues}
+                        />
+                        <CodeForm 
+                            snippetValues={snippetValues}
+                            setSnippetValues={setSnippetValues}
+                        />
+                    </StyledInputCol>
+                    <Col>
+                        <CopyBlock
+                            text={code}
+                            language={language == 'Choose Language' ? defaultLangauge : language}
+                            showLineNumbers={true}
+                            startingLineNumber={true}
+                            theme={dracula}
+                            wrapLines
+                        />
+                    </Col>
+                </Row>
+                <Button size="md" onClick={submitFunc}>
+                    Next
+                </Button> 
+            </Container>
+        )}
+    </>
     );
 }
 

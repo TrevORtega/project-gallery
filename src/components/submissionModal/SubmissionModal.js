@@ -33,7 +33,8 @@ export const SubmissionModal = () => {
         description: '',
         imageUrls: [],
         videoUrl: [],
-        codeSnippets: [],
+        code: '',
+        language: '',
         diagramSetup: {}
     });
 
