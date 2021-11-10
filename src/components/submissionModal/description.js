@@ -4,8 +4,8 @@ import { Form, Button } from "react-bootstrap";
 
 export const Description = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
-        name: '',
-        description: ''
+        name: modalValues.name,
+        description: modalValues.description
     })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
@@ -19,7 +19,10 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
 
     const submitFunc = (e) => {
         e.preventDefault();
-        setModalValues({...formValues, state: modalValues.state+1});
+        setModalValues({
+            ...modalValues,
+            ...formValues,
+            state: modalValues.state+1});
         setIsSubmitted(true);
     }
     return ( 

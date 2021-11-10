@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import { Col, Container, Dropdown, Row, Form, Button } from 'react-bootstrap';
-import { CopyBlock, dracula } from 'react-code-blocks';
+import { CopyBlock, codepen } from 'react-code-blocks';
 import styled from 'styled-components';
 
 const StyledInputCol = styled(Col)`
     overflow-y: scroll;
 `;
 
-const LanguageDropdown = ({snippetValues, setSnippetValues}) => {
+const StyledCodeCol = styled(Col)`
+    text-align: left;
+`;
+
+// Left side with input containers
+const LanguageDropdown = ({snippetValues, setSnippetValues, i}) => {
     const { language } = snippetValues;
 
     const onChange = (eventkey, e) => {
         e.preventDefault();
-        setSnippetValues({...snippetValues, language: e.target.name});
+        snippetValues.language[i] = e.target.name;
+        setSnippetValues({...snippetValues});
     }
 
     const Items = languages.map(lang => {
@@ -32,11 +38,13 @@ const LanguageDropdown = ({snippetValues, setSnippetValues}) => {
     );
 }
 
-const CodeForm = ({snippetValues, setSnippetValues}) => {
+// Right side with presented code
+const CodeForm = ({snippetValues, setSnippetValues, i}) => {
 
     const onChange = (e) => {
         e.preventDefault();
-        setSnippetValues({...snippetValues, code: e.target.value});
+        snippetValues.code[i] = `${e.target.value}`;
+        setSnippetValues({...snippetValues});
     }
 
 
@@ -52,23 +60,69 @@ const CodeForm = ({snippetValues, setSnippetValues}) => {
     );
 }
 
+const SnippetRow = ({i, snippetValues, setSnippetValues, defaultLanguage}) => {
+    const code = snippetValues.code[i];
+    const language = snippetValues.language[i];
+
+    return (
+        <Row>
+            <StyledInputCol>
+                <LanguageDropdown 
+                    snippetValues={snippetValues}
+                    setSnippetValues={setSnippetValues}
+                    i={i}
+                />
+                <CodeForm 
+                    snippetValues={snippetValues}
+                    setSnippetValues={setSnippetValues}
+                    i={i}
+                />
+            </StyledInputCol>
+            <StyledCodeCol>
+                <CopyBlock
+                    text={code}
+                    language={language === 'Choose Language' ? defaultLanguage : language}
+                    showLineNumbers={true}
+                    theme={codepen}
+                    codeBlock={true}
+                    wrapLines={true}
+                />
+            </StyledCodeCol>
+        </Row>
+    );
+}
+
 export const Snippets = ({pages, modalValues, setModalValues}) => {
+    const snippetDefaults = {code: '', language: 'Choose Language'}
     const [snippetValues, setSnippetValues] = useState({
-        code: '',
-        language: 'Choose Language'
+        code: [snippetDefaults.code],
+        language: [snippetDefaults.language]
     })
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
     const defaultLangauge = 'text';
-    const { code, language } = snippetValues;
 
     const submitFunc = (e) => {
         e.preventDefault();
-        setModalValues({...snippetValues, state: modalValues.state+1});
+        setModalValues({
+            ...modalValues,
+            ...snippetValues,
+            state: modalValues.state+1
+        });
         setIsSubmitted(true);
     }
+
+    const Snippets = snippetValues.code.map((_, i) => (
+        <SnippetRow
+            i={i}
+            snippetValues={snippetValues}
+            setSnippetValues={setSnippetValues}
+            defaultLanguage={defaultLangauge}
+        />
+    )) 
+
     return (
         <>
             {isSubmitted ? 
@@ -86,31 +140,19 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
                         </h3>
                     </Col>
                 </Row>
+                {Snippets}
                 <Row>
-                    <StyledInputCol>
-                        <LanguageDropdown 
-                            snippetValues={snippetValues}
-                            setSnippetValues={setSnippetValues}
-                        />
-                        <CodeForm 
-                            snippetValues={snippetValues}
-                            setSnippetValues={setSnippetValues}
-                        />
-                    </StyledInputCol>
                     <Col>
-                        <CopyBlock
-                            text={code}
-                            language={language == 'Choose Language' ? defaultLangauge : language}
-                            showLineNumbers={true}
-                            startingLineNumber={true}
-                            theme={dracula}
-                            wrapLines
-                        />
+                        <Button size="md" onClick={() => {console.log('adding...')}}>
+                            Add Another Snippet
+                        </Button> 
+                    </Col>
+                    <Col>
+                        <Button size="md" onClick={submitFunc}>
+                            Next
+                        </Button> 
                     </Col>
                 </Row>
-                <Button size="md" onClick={submitFunc}>
-                    Next
-                </Button> 
             </Container>
         )}
     </>

@@ -17,28 +17,31 @@ const fileListHasImageFiles = (fileList) => {
 
 export const Visuals = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
-        screenshots: [],
-        video: null
+        imageUrls: modalValues.imageUrls,
+        videoUrl: modalValues.videoUrl
     })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
     // FileList should contain jpg and png files
-    const validScreenshots =  fileListHasImageFiles(formValues.screenshots); 
+    const validScreenshots =  fileListHasImageFiles(formValues.imageUrls); 
     
     // Video should be an mp4 file
-    const validVideo = formValues.video?.name?.endsWith('.mp4');
+    const validVideo = formValues.videoUrl?.name?.endsWith('.mp4');
     const validSubmit = validScreenshots || validVideo;
 
     const setValues = (e) => {
         e.preventDefault();
-        const values = e.target.name === 'screenshots' ? e.target.files : e.target.files[0]; 
+        const values = e.target.name === 'imageUrls' ? e.target.files : e.target.files[0]; 
         setFormValues({...formValues, [e.target.name]: values});
     }
 
     const submitFunc = (e) => {
         e.preventDefault();
-        setModalValues({...formValues, state: modalValues.state+1});
+        setModalValues({
+            ...formValues,
+            state: modalValues.state+1
+        });
         setIsSubmitted(true);
     }
 
@@ -55,7 +58,7 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
                     <Stack gap={3}>
                         <Form.Label>Upload at least one Project Screenshot</Form.Label>
                         <Form.Control 
-                            name="screenshots"
+                            name="imageUrls"
                             type="file" 
                             required 
                             isInvalid={!validScreenshots} 
@@ -65,7 +68,7 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
                         />
                         <Form.Label>Demo Video</Form.Label>
                         <Form.Control 
-                            name="video"
+                            name="videoUrls"
                             type="file" 
                             isInvalid={!validVideo}
                             isValid={validVideo}

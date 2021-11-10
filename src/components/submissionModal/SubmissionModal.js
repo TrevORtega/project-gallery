@@ -5,11 +5,11 @@ import { ContentContainer } from "../theme/mainTheme";
 
 import { Description } from "./description";
 import { Snippets } from "./snippets";
-import { SystemDesign } from "./systemDesign";
 import { Visuals } from "./visuals";
+import { Project } from "../project/Project"
 
 const StyledModalContainer = styled.div`
-    max-width: 40vw;
+    max-width: 70vw;
     min-width: 300px;
     padding-top: 5vh;
     padding-bottom: 20px;
@@ -23,6 +23,7 @@ const StyledContentContainer = styled(ContentContainer)`
     dispaly: flex;
     flex-align: column;
     justify-content: center;
+    overflow-y: scroll;
 `;
 
 
@@ -32,10 +33,9 @@ export const SubmissionModal = () => {
         name: '',
         description: '',
         imageUrls: [],
-        videoUrl: [],
-        code: '',
-        language: '',
-        diagramSetup: {}
+        videoUrl: null,
+        code: [''],
+        language: ['Choose Your Language']
     });
 
     const { modalState } = modalValues;
@@ -46,7 +46,7 @@ export const SubmissionModal = () => {
         createProject();
     }
 
-    const pages = [Description, Visuals, Snippets, SystemDesign];
+    const pages = [Description, Visuals, Snippets, Project];
     return (
         <StyledContentContainer>
             <StyledModalContainer>
