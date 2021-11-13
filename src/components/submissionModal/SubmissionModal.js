@@ -32,6 +32,7 @@ export const SubmissionModal = () => {
         state: 0,
         name: '',
         description: '',
+        sourceLink: '',
         imageUrls: [],
         videoUrl: null,
         code: [''],
@@ -40,7 +41,7 @@ export const SubmissionModal = () => {
 
     const { modalState } = modalValues;
     const createProject = () => {
-        console.log(modalValues);
+        console.log('creating...');
     }
     if (modalState > 3){
         createProject();

@@ -89,7 +89,7 @@ function RouterApp(){
           <Route path="/search">
             <SearchResults />
           </Route>
-          <Route>
+          <Route path="*">
             <NoPage />
           </Route>
         </Switch>

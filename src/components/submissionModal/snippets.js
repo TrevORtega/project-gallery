@@ -116,6 +116,7 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
 
     const Snippets = snippetValues.code.map((_, i) => (
         <SnippetRow
+            key={i}
             i={i}
             snippetValues={snippetValues}
             setSnippetValues={setSnippetValues}

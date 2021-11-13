@@ -17,8 +17,7 @@ const fileListHasImageFiles = (fileList) => {
 
 export const Visuals = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
-        imageUrls: modalValues.imageUrls,
-        videoUrl: modalValues.videoUrl
+        ...modalValues
     })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];

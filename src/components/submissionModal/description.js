@@ -5,7 +5,8 @@ import { Form, Button } from "react-bootstrap";
 export const Description = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
         name: modalValues.name,
-        description: modalValues.description
+        description: modalValues.description,
+        sourceLink: modalValues.sourceLink
     })
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
@@ -52,6 +53,15 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
                             isInvalid={formValues.description === ''} 
                             as="textarea" 
                             rows={5} 
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" >
+                        <Form.Label>Source Code Link</Form.Label>
+                        <Form.Control 
+                            name="sourceLink" 
+                            placeholder="https://github.com/trevortega/project-gallery"
+                            as="textarea" 
+                            rows={1} 
                         />
                     </Form.Group>
                     <Button size="md" disabled={validSubmit} onClick={submitFunc}>
