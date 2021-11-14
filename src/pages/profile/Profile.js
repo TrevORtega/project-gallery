@@ -22,6 +22,10 @@ const StyledProfile = styled.div`
     text-align: left;
     color: #fff;
     }
+    
+    p {
+        text-align: left;
+    }
 
     .container {
     margin: 20px 0px 0px 20px;
@@ -43,6 +47,14 @@ const StyledProfile = styled.div`
 `;
 
 const DefaultProfile = () => {
+    const [profile, setUseProfile] = useState({
+        name: 'DefaultUser',
+        about: 'I\'m a CS student looking to get a job',
+        experience: 'N/A',
+        education: 'Sophomore at WWU',
+        projects: []
+    });
+
     return (
         <>
             <div class="container">
@@ -54,13 +66,13 @@ const DefaultProfile = () => {
                 </div>
             </div>
             <h3>About</h3>
-            <p></p>
+            <p>{profile.name}</p>
             <h3>Experience</h3>
-            <p></p>
+            <p>{profile.about}</p>
             <h3>Education</h3>
-            <p></p>
+            <p>{profile.education}</p>
             <h3>Projects</h3>
-            <p></p>
+            <p>{profile.projects}</p>
         </>
     );
 }
@@ -72,6 +84,9 @@ const ProfileContent = ({ setModalMode }) => {
                 <DefaultProfile />    
                 <Button size='sm' onClick={() => setModalMode(true)}>
                     New Project
+                </Button>
+                <Button size='sm' href="/profile/edit" >
+                    Edit Profile
                 </Button>
             </StyledProfile>
         </ContentContainer>

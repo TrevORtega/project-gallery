@@ -11,6 +11,7 @@ import { DefaultNav } from './components/nav/Nav.js';
 import { Profile } from './pages/profile/Profile.js';
 import { SearchResults } from './pages/searchResults/SearchResults.js'
 import { NoPage } from './pages/noPage/NoPage.js'
+import { edit } from './pages/profile/EditProfile.js';
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 import { Login } from './pages/login/Login.js';
 import { useCookies } from 'react-cookie';
@@ -80,18 +81,14 @@ function RouterApp(){
     <Router>
       <div>
         <Switch>
-          <Route exact path="/">
-            <App />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/search">
-            <SearchResults />
-          </Route>
-          <Route path="*">
-            <NoPage />
-          </Route>
+          <Route exact path="/" component={App} />
+
+          <Route exact path="/profile" component={Profile} />
+          <Route path="/profile/edit" component={edit} />
+
+          <Route exact path="/search" component={SearchResults} />
+
+          <Route path="*" component={NoPage} />
         </Switch>
       </div>
     </Router>
