@@ -88,6 +88,9 @@ const ProfileContent = ({ setModalMode }) => {
                 <Button size='sm' href="/profile/edit" >
                     Edit Profile
                 </Button>
+                <Button size='sm' href="/profile/findGit" >
+                    Add Github
+                </Button>
             </StyledProfile>
         </ContentContainer>
     );

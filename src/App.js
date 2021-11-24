@@ -9,6 +9,8 @@ import {
 
 import { DefaultNav } from './components/nav/Nav.js';
 import { Profile } from './pages/profile/Profile.js';
+import { gitProjects } from './pages/profile/gitProject.js';
+
 import { SearchResults } from './pages/searchResults/SearchResults.js'
 import { NoPage } from './pages/noPage/NoPage.js'
 import { edit } from './pages/profile/EditProfile.js';
@@ -85,6 +87,8 @@ function RouterApp(){
 
           <Route exact path="/profile" component={Profile} />
           <Route path="/profile/edit" component={edit} />
+          
+          <Route path="/profile/findGit" component={gitProjects} />
 
           <Route exact path="/search" component={SearchResults} />
 
