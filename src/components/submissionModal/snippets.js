@@ -11,9 +11,16 @@ const StyledCodeCol = styled(Col)`
     text-align: left;
 `;
 
-// Left side with input containers
+const StyledDropdown = styled(Dropdown)`
+    .dropdown-menu.show {
+        height: 20vh;
+        overflow-y: scroll;
+    }
+`;
+
+// Left side dropdown 
 const LanguageDropdown = ({snippetValues, setSnippetValues, i}) => {
-    const { language } = snippetValues;
+    const language = snippetValues.language[i];
 
     const onChange = (eventkey, e) => {
         e.preventDefault();
@@ -26,7 +33,7 @@ const LanguageDropdown = ({snippetValues, setSnippetValues, i}) => {
     });
 
     return (
-        <Dropdown onSelect={onChange}>
+        <StyledDropdown onSelect={onChange}>
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
                 {language} 
             </Dropdown.Toggle>
@@ -34,11 +41,11 @@ const LanguageDropdown = ({snippetValues, setSnippetValues, i}) => {
             <Dropdown.Menu>
                 {Items}
             </Dropdown.Menu>
-        </Dropdown>
+        </StyledDropdown>
     );
 }
 
-// Right side with presented code
+// Left side form 
 const CodeForm = ({snippetValues, setSnippetValues, i}) => {
 
     const onChange = (e) => {
@@ -60,9 +67,11 @@ const CodeForm = ({snippetValues, setSnippetValues, i}) => {
     );
 }
 
-const SnippetRow = ({i, snippetValues, setSnippetValues, defaultLanguage}) => {
+// Both sides together. Can be multiple
+const SnippetRow = ({i, snippetValues, setSnippetValues}) => {
     const code = snippetValues.code[i];
     const language = snippetValues.language[i];
+    console.log(code, language);
 
     return (
         <Row>
@@ -81,7 +90,7 @@ const SnippetRow = ({i, snippetValues, setSnippetValues, defaultLanguage}) => {
             <StyledCodeCol>
                 <CopyBlock
                     text={code}
-                    language={language === 'Choose Language' ? defaultLanguage : language}
+                    language={language === 'Choose Language' ? 'text' : language}
                     showLineNumbers={true}
                     theme={codepen}
                     codeBlock={true}
@@ -102,8 +111,6 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
-    const defaultLangauge = 'text';
-
     const submitFunc = (e) => {
         e.preventDefault();
         setModalValues({
@@ -112,17 +119,40 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
             state: modalValues.state+1
         });
         setIsSubmitted(true);
-    }
+    };
+
+    const backFunc = () => {
+        setModalValues({
+            ...modalValues,
+            ...snippetValues,
+            state: modalValues.state-1
+        });
+        setIsSubmitted(true);
+    };
+
+    const addNewSnippet = () => {
+        setModalValues({
+            ...modalValues,
+            code: snippetValues.code.push(''),
+            language: snippetValues.language.push('Choose Language')
+        });
+        console.log(snippetValues.code, snippetValues.language);
+    };
 
     const Snippets = snippetValues.code.map((_, i) => (
-        <SnippetRow
-            key={i}
-            i={i}
-            snippetValues={snippetValues}
-            setSnippetValues={setSnippetValues}
-            defaultLanguage={defaultLangauge}
-        />
-    )) 
+        <>
+            <br/>
+            <SnippetRow
+                key={i}
+                i={i}
+                snippetValues={snippetValues}
+                setSnippetValues={setSnippetValues}
+            />
+        </>
+    )); 
+
+    const isValid = snippetValues.language
+        .filter(x => x === "Choose Language").length === 0;
 
     return (
         <>
@@ -144,12 +174,19 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
                 {Snippets}
                 <Row>
                     <Col>
-                        <Button size="md" onClick={() => {console.log('adding...')}}>
+                        <Button size="md" onClick={addNewSnippet}>
                             Add Another Snippet
                         </Button> 
                     </Col>
                     <Col>
-                        <Button size="md" onClick={submitFunc}>
+                        <Button size="md" onClick={backFunc}>
+                            Back
+                        </Button>
+                        <Button 
+                            size="md" 
+                            onClick={submitFunc}
+                            disabled={!isValid}
+                        >
                             Next
                         </Button> 
                     </Col>

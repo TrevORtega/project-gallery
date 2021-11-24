@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Stack } from "react-bootstrap"
+import { Button, Form, Stack, Row, Col } from "react-bootstrap"
 
 const fileListHasImageFiles = (fileList) => {
     return (fileList?.length > 0 &&  
@@ -35,6 +35,15 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
         setFormValues({...formValues, [e.target.name]: values});
     }
 
+    const backFunc = () => {
+        setModalValues({
+            ...modalValues,
+            ...formValues,
+            state: modalValues.state-1
+        });
+        setIsSubmitted(true);
+    }
+
     const submitFunc = (e) => {
         e.preventDefault();
         setModalValues({
@@ -67,16 +76,26 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
                         />
                         <Form.Label>Demo Video</Form.Label>
                         <Form.Control 
-                            name="videoUrls"
+                            name="videoUrl"
                             type="file" 
-                            isInvalid={!validVideo}
                             isValid={validVideo}
+                            isInvalid={!validVideo}
                             onChange={setValues}
                         />
 
-                        <Button size="md" disabled={!validSubmit} onClick={submitFunc}>
-                            Next
-                        </Button> 
+                        <Row>
+                            <Col>
+                                <Button size="md" onClick={backFunc}>
+                                    Back
+                                </Button> 
+                            </Col>
+
+                            <Col>
+                                <Button size="md" disabled={!validSubmit} onClick={submitFunc}>
+                                    Next
+                                </Button> 
+                            </Col>
+                        </Row>
 
                     </Stack>
                 </Form.Group> 
