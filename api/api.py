@@ -51,7 +51,7 @@ def get_project():
     # ID is the number of current projects + 1
     id = input_json[key]
 
-    project_path = str(DOWNLOAD_LOCATION / f'{id}.json')
+    project_path = str(DOWNLOAD_LOCATION / 'projects/jsons' / f'{id}.json')
 
     values = None
     with open(project_path) as f:
@@ -65,7 +65,45 @@ def get_project():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response 
 
+@app.route('/api/search-projects', methods=["POST"])
+def search_projects():
+    key = 'query'
+    input_json = request.get_json(force=True)
 
+    # Get query string, turn it to lower case list of words
+    query = input_json[key].lower().split(' ')
+
+    project_locations = DOWNLOAD_LOCATION / 'projects/jsons'
+    project_dict = {}
+    # Go through every project we have
+    for project in project_locations.iterdir():
+        proj_json = json.load(open(project))
+
+        # Only search name, description, and languages are searched 
+        searchables = [
+            proj_json['name'].lower(),
+            proj_json['description'].lower(),
+            ' '.join(l.lower() for l in proj_json['language'])
+        ]
+
+        # Count how many times any of the search queries appear
+        # in the searchable text 
+        total = sum([1 for q in query 
+                    for s in searchables 
+                    if q in s])
+
+        # If we find something, put in dictionary
+        # if project 3.json has 2 instances, we get the result:
+        # {'3': 2}
+        if total > 0:
+            project_dict[project.stem] = total
+
+    # Return as json (don't change this)
+    response = jsonify({'projects': project_dict})
+    # Fixes CORS errors
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+   
 
 
 if __name__ == '__main__':

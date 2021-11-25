@@ -177,3 +177,30 @@ export const SavedProject = () => {
 
     return <Display /> 
 }
+
+export const SavedProjectSmall = ({ id }) => {
+    const [data, setData] = useState(null);
+    LoadProject({id, setData});
+    
+    let Display = null;
+    if (data) {
+        console.log('data-to-display -> ', data);
+        if ('ERR' in data){
+            Display = () => <p>Project Does Not Exist</p>;
+        } 
+        else{
+            Display = () => {
+                return (
+                    <div >
+                        <a href={`/project/${id}`}>{data.name}</a>
+                    </div>
+                );
+            }
+        }
+    }
+    else{
+        Display = () => <p>Loading...</p>;
+    }
+
+    return <Display /> 
+}
