@@ -7,7 +7,7 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
         name: modalValues.name,
         description: modalValues.description,
         sourceLink: modalValues.sourceLink
-    })
+    });
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
@@ -16,16 +16,17 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
     const setValues = (e) => {
         e.preventDefault();
         setFormValues({...formValues, [e.target.name]: e.target.value});
-    }
+    };
 
     const submitFunc = (e) => {
         e.preventDefault();
         setModalValues({
             ...modalValues,
             ...formValues,
-            state: modalValues.state+1});
+            state: modalValues.state+1
+        });
         setIsSubmitted(true);
-    }
+    };
     return ( 
         <>
             {isSubmitted ? 
@@ -64,6 +65,7 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
                             rows={1} 
                         />
                     </Form.Group>
+                    
                     <Button size="md" disabled={validSubmit} onClick={submitFunc}>
                         Next
                     </Button>
