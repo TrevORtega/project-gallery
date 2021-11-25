@@ -15,6 +15,7 @@ import { edit } from './pages/profile/EditProfile.js';
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 import { Login } from './pages/login/Login.js';
 import { useCookies } from 'react-cookie';
+import { SavedProject } from './components/project/Project.js';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -85,6 +86,8 @@ function RouterApp(){
 
           <Route exact path="/profile" component={Profile} />
           <Route path="/profile/edit" component={edit} />
+
+          <Route path="/project/:projectId" component={SavedProject} />
 
           <Route exact path="/search" component={SearchResults} />
 

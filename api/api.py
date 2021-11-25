@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from pathlib import Path
 import json
+import urllib.request
 
 DOWNLOAD_LOCATION = Path('../data')
 
@@ -17,6 +18,7 @@ def api():
 
 @app.route('/api/save-project', methods=["POST"])
 def save_project():
+    save_location = DOWNLOAD_LOCATION / 'projects/jsons'
     # Only values we are intersted in
     keys = ['name', 'description', 'sourceLink', 
         'imageUrls', 'videoUrl', 'code', 'language']
@@ -24,9 +26,13 @@ def save_project():
     input_json = request.get_json(force=True)
 
     # ID is the number of current projects + 1
-    id = str(len(list(DOWNLOAD_LOCATION.iterdir())) + 1) + '.json'
+    id = str(len(list(save_location.iterdir())) + 1) + '.json'
 
-    with open(DOWNLOAD_LOCATION / id, 'w+') as f:
+    #for i, image_url in enumerate(input_json['imageUrls']):
+    #    urllib.request.urlretrieve(image_url, 
+    #        DOWNLOAD_LOCATION / f'projects/images/{id}-{i}.jpeg')
+
+    with open(save_location / id, 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}
         json.dump(dict_values, f)
 
@@ -35,8 +41,9 @@ def save_project():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response 
 
-@app.route('/api/get-project', methods=["POST"])
+@app.route('/api/load-project', methods=["POST"])
 def get_project():
+    load_location = DOWNLOAD_LOCATION / 'projects/jsons'
     # Only value we are intersted in
     key = 'id'
     input_json = request.get_json(force=True)
@@ -46,14 +53,10 @@ def get_project():
 
     project_path = str(DOWNLOAD_LOCATION / f'{id}.json')
 
-    with open(DOWNLOAD_LOCATION / id, 'w+') as f:
-        dict_values = {k: input_json[k] for k in keys}
-        json.dump(dict_values, f)
-
     values = None
     with open(project_path) as f:
         values = json.load(f)
-
+    
     if values is None:
         values = {'error': 'file does not exist'}    
 

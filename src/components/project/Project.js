@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Button, Accordion, Carousel, Stack } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CodeBlock } from "../submissionModal/snippets";
 
-import { SaveProject, FileListToUrlList, FileToUrl } from "./ProjectApi";
+import { SaveProject, FileListToUrlList, FileToUrl, LoadProject } from "./ProjectApi";
 
 const DescriptionAccordion = ({description}) => {
     return (
@@ -24,7 +25,7 @@ const ImageAccordianWithDemo = ({imageUrls, videoUrl=null}) => {
         setIndex(selectedIndex);
     }
 
-    if (typeof(imageUrls) === 'object'){
+    if (!Array.isArray(imageUrls)){
             imageUrls = FileListToUrlList(imageUrls);
             videoUrl = videoUrl && FileToUrl(videoUrl);
 
@@ -65,7 +66,7 @@ const SnippetBlocks = ({code, language}) => {
             {code.map((snip, i) => (
                 <Col>
                     <CodeBlock 
-                        key={i}
+                        key={{i}}
                         code={snip}
                         language={language[i]}
                     />
@@ -109,13 +110,13 @@ export const Project = ({ modalValues }) => {
 }
 
 export const NewProject = ({ pages, modalValues, setModalValues }) => {
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [goBack, setGoBack] = useState(false);
     const Page = pages[modalValues.state-1];
     
 
     const saveFunc = () => {
-        const status = SaveProject(modalValues);
-        console.log(['Error', 'Good', 'Nothing'][status+1])
+        setIsSubmitted(true);
     }
 
     const backFunc = () => {
@@ -130,18 +131,49 @@ export const NewProject = ({ pages, modalValues, setModalValues }) => {
                     setModalValues={setModalValues}
                 /> 
             ) : (
-                <> 
-                    <Project 
-                        modalValues={modalValues}
-                    />
-                    <Button onClick={backFunc}>
-                        Back
-                    </Button>
-                    <Button onClick={saveFunc}>
-                        Finish
-                    </Button>
+                <>
+                {isSubmitted ? <SaveProject modalValues={modalValues} /> 
+                : (
+                    <> 
+                        <Project 
+                            modalValues={modalValues}
+                        />
+                        <Button onClick={backFunc}>
+                            Back
+                        </Button>
+                        <Button onClick={saveFunc}>
+                            Finish
+                        </Button>
+                    </>
+                )}
                 </>
         )}
     </>
     );
 } 
+
+export const SavedProject = () => {
+    const [data, setData] = useState(null);
+    const { projectId } = useParams();
+    LoadProject({id: projectId, setData});
+    
+    let Display = null;
+    if (data) {
+        console.log('data-to-display -> ', data);
+        if ('ERR' in data){
+            Display = () => <p>Project Does Not Exist</p>;
+        } 
+        else{
+            Display = () => {
+                return (
+                    <Project modalValues={data} />
+                );
+            }
+        }
+    }
+    else{
+        Display = () => <p>Loading...</p>;
+    }
+
+    return <Display /> 
+}
