@@ -12,7 +12,7 @@ const StyledText = styled.p`
     background-color: red;
 `;
 
-const ShowBar = () => {
+const ShowBar = ({ submitFunc }) => {
     return(
         <ContentContainer>
             <MainContainer fluid={true}>
@@ -44,6 +44,7 @@ export const GitProjects = () => {
       return setSubmitQuery(formDataObj.search);
     }
     const validSubmit = submitQuery !== '';
+    console.log()
     return ( 
       validSubmit ? 
         <SearchResults query={submitQuery} />
