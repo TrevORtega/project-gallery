@@ -1,11 +1,23 @@
-const saveProject = ({ modalValues }) => {
-    const [responseStatus, setResponseStatus] = useState(0);
+import { useEffect, useState } from "react";
+
+export const FileListToUrlList = (fileList) => {
+    return Array.from(fileList)?.map(
+            x => x && FileToUrl(x));
+};
+
+export const FileToUrl = (file) => {
+    return URL.createObjectURL(file);
+};
+
+export const SaveProject = ({ modalValues }) => {
+    const [responseStatus, setResponseStatus] = useState(1);
    
     useEffect(() => {
-        modalValues.imageUrls = Array.from(modalValues.imageUrls)?.map(
-            x => x && URL.createObjectURL(x)
-        );
-        modalValues.videoUrl = modalValues.videoUrl && URL.createObjectURL(modalValues.videoUrl);
+        if (typeof(modalValues.imageUrls) === 'object'){
+            modalValues.imageUrls = FileListToUrlList(modalValues.imageUrls);
+            modalValues.videoUrl = modalValues.videoUrl && FileToUrl(modalValues.videoUrl);
+
+        }
         sendToApi();
     }, [])
 
@@ -21,16 +33,43 @@ const saveProject = ({ modalValues }) => {
         })
         fetch(request)
             .then(response => response.json())
-            .then(data => {
-                setProjectJson({...data})
-                console.log('data -> ', data);
-            }
-            )
+            .then(() => setResponseStatus(0)) 
             .catch(err => {
                 console.log('ERR: ', err);
-                setProjectJson('ERR');
+                setResponseStatus(-1);
             });
     }
 
-    return  
+    return responseStatus 
+}
+
+export const LoadProject = ({ id }) => {
+    const [projectData, setProjectData] = useState(null);
+   
+    useEffect(() => {
+        loadFromApi();
+    }, [])
+
+    const loadFromApi = () => {
+        const body = JSON.stringify({'id': id});
+
+        const request = new Request('http://localhost:1111/api/load-project', {
+            'method': 'POST',
+            'headers': {
+                'Content-Type': 'text/plain'
+            },
+            'body': String(body) 
+        })
+        fetch(request)
+            .then(response => response.json())
+            .then(data => {
+                setProjectData({...data})
+            })
+            .catch(err => {
+                console.log('ERR: ', err);
+                setProjectData({'ERR': err});
+            });
+    }
+
+    return projectData 
 }

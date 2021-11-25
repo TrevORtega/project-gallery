@@ -67,11 +67,26 @@ const CodeForm = ({snippetValues, setSnippetValues, i}) => {
     );
 }
 
+// Right Side Code Block
+export const CodeBlock = ({code, language}) => {
+    return (
+        <StyledCodeCol>
+            <CopyBlock
+                text={code}
+                language={language === 'Choose Language' ? 'text' : language}
+                showLineNumbers={true}
+                theme={codepen}
+                codeBlock={true}
+                wrapLines={true}
+            />
+        </StyledCodeCol>
+    );
+}
+
 // Both sides together. Can be multiple
 const SnippetRow = ({i, snippetValues, setSnippetValues}) => {
     const code = snippetValues.code[i];
     const language = snippetValues.language[i];
-    console.log(code, language);
 
     return (
         <Row>
@@ -87,16 +102,10 @@ const SnippetRow = ({i, snippetValues, setSnippetValues}) => {
                     i={i}
                 />
             </StyledInputCol>
-            <StyledCodeCol>
-                <CopyBlock
-                    text={code}
-                    language={language === 'Choose Language' ? 'text' : language}
-                    showLineNumbers={true}
-                    theme={codepen}
-                    codeBlock={true}
-                    wrapLines={true}
-                />
-            </StyledCodeCol>
+            <CodeBlock 
+                code={code}
+                language={language}
+            /> 
         </Row>
     );
 }

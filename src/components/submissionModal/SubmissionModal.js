@@ -6,7 +6,7 @@ import { ContentContainer } from "../theme/mainTheme";
 import { Description } from "./description";
 import { Snippets } from "./snippets";
 import { Visuals } from "./visuals";
-import { Project } from "../project/Project"
+import { NewProject } from "../project/Project"
 
 const StyledModalContainer = styled.div`
     max-width: 70vw;
@@ -47,7 +47,7 @@ export const SubmissionModal = () => {
         createProject();
     }
 
-    const pages = [Description, Visuals, Snippets, Project];
+    const pages = [Description, Visuals, Snippets, NewProject];
     return (
         <StyledContentContainer>
             <StyledModalContainer>
