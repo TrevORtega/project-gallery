@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { Redirect, useHistory } from "react-router";
 
 export const FileListToUrlList = (fileList) => {
@@ -11,7 +12,7 @@ export const FileToUrl = (file) => {
 };
 
 export const SaveProject = ({ modalValues }) => {
-   
+    const [cookies, setCookies] = useCookies();
     useEffect(() => {
         if (!Array.isArray(modalValues.imageUrls)){
             modalValues.imageUrls = FileListToUrlList(modalValues.imageUrls);
@@ -22,6 +23,7 @@ export const SaveProject = ({ modalValues }) => {
     }, [])
 
     const sendToApi = () => {
+        modalValues.username = cookies.username; 
         const body = JSON.stringify(modalValues);
         const request = new Request('http://localhost:1111/api/save-project', {
             'method': 'POST',

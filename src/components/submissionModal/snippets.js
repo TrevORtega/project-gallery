@@ -47,11 +47,12 @@ const LanguageDropdown = ({snippetValues, setSnippetValues, i}) => {
 
 // Left side form 
 const CodeForm = ({snippetValues, setSnippetValues, i}) => {
-
+    const code = snippetValues.code[i];
     const onChange = (e) => {
         e.preventDefault();
-        snippetValues.code[i] = `${e.target.value}`;
-        setSnippetValues({...snippetValues});
+        const newValues = snippetValues.code.slice()
+        newValues[i] = e.target.value;
+        setSnippetValues({...snippetValues, [e.target.name]: newValues});
     }
 
 
@@ -62,6 +63,8 @@ const CodeForm = ({snippetValues, setSnippetValues, i}) => {
                 as="textarea" 
                 rows={5} 
                 onChange={onChange}
+                value={code}
+                
             />
         </Form.Group>
     );
@@ -111,10 +114,9 @@ const SnippetRow = ({i, snippetValues, setSnippetValues}) => {
 }
 
 export const Snippets = ({pages, modalValues, setModalValues}) => {
-    const snippetDefaults = {code: '', language: 'Choose Language'}
     const [snippetValues, setSnippetValues] = useState({
-        code: [snippetDefaults.code],
-        language: [snippetDefaults.language]
+        code: modalValues.code,
+        language: modalValues.language
     })
 
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -152,7 +154,7 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
         <>
             <br/>
             <SnippetRow
-                key={i}
+                key={Number(Math.random() * 1000)}
                 i={i}
                 snippetValues={snippetValues}
                 setSnippetValues={setSnippetValues}
@@ -176,7 +178,7 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
                 <Row>
                     <Col>
                         <h3>
-                            Enter a Code Snippet!
+                            Paste a Code Snippet!
                         </h3>
                     </Col>
                 </Row>

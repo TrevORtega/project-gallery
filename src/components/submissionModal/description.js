@@ -8,6 +8,7 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
         description: modalValues.description,
         sourceLink: modalValues.sourceLink
     });
+
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
@@ -44,7 +45,9 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
                             as="textarea" 
                             required 
                             isInvalid={formValues.name === ''} 
-                            placeholder="Decentralized AI Blockchain Discussion Forum" />
+                            placeholder="Decentralized AI Blockchain Discussion Forum" 
+                            value={formValues.name}
+                        />
                     </Form.Group>
                     <Form.Group className="mb-3" >
                         <Form.Label>Project Description</Form.Label>
@@ -54,6 +57,7 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
                             isInvalid={formValues.description === ''} 
                             as="textarea" 
                             rows={5} 
+                            value={formValues.description}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" >
@@ -63,6 +67,7 @@ export const Description = ({ pages, modalValues, setModalValues }) => {
                             placeholder="https://github.com/trevortega/project-gallery"
                             as="textarea" 
                             rows={1} 
+                            value={formValues.sourceLink}
                         />
                     </Form.Group>
                     

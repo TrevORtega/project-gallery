@@ -26,26 +26,18 @@ const StyledContentContainer = styled(ContentContainer)`
     overflow-y: scroll;
 `;
 
-
-export const SubmissionModal = () => {
-    const [modalValues, setModalValues] = useState({
-        state: 0,
-        name: '',
-        description: '',
-        sourceLink: '',
-        imageUrls: [],
-        videoUrl: null,
-        code: [''],
-        language: ['Choose Your Language']
-    });
-
-    const { modalState } = modalValues;
-    const createProject = () => {
-        console.log('creating...');
-    }
-    if (modalState > 3){
-        createProject();
-    }
+export const SubmissionModal = ({ name, description, sourceLink,imageUrls, videoUrl, code, language }) => {
+    const values = 
+        {
+            name: name || '',
+            description: description || '',
+            sourceLink: sourceLink || '',
+            imageUrls: imageUrls || [],
+            videoUrl: videoUrl || null,
+            code: code || [''],
+            language: language || ['Choose Language']
+        };
+    const [modalValues, setModalValues] = useState({state: 0, ...values});
 
     const pages = [Description, Visuals, Snippets, NewProject];
     return (

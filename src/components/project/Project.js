@@ -120,6 +120,7 @@ export const NewProject = ({ pages, modalValues, setModalValues }) => {
     }
 
     const backFunc = () => {
+        setModalValues({...modalValues, state: modalValues.state-1})
         setGoBack(true);
     }
     return (

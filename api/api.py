@@ -21,10 +21,9 @@ def save_project():
     save_location = DOWNLOAD_LOCATION / 'projects/jsons'
     # Only values we are intersted in
     keys = ['name', 'description', 'sourceLink', 
-        'imageUrls', 'videoUrl', 'code', 'language']
+        'imageUrls', 'videoUrl', 'code', 'language', 'username']
 
     input_json = request.get_json(force=True)
-
     # ID is the number of current projects + 1
     id = str(len(list(save_location.iterdir())) + 1) + '.json'
 
