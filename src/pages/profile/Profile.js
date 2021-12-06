@@ -123,14 +123,20 @@ export const MainProfilePage = ({ profileData }) => {
 export const DynamicProfile = () => {
     const [data, setData] = useState(null);
     const { profileName } = useParams();
+    const [cookies, setCookies] = useCookies();
 
     LoadProfile({username: profileName, setData});
     
     let Display = null;
     if (data) {
-        if ('ERR' in data || 'error' in data){
-            Display = () => <p>Profile Does Not Exist</p>;
-            //window.location.href = `/profile/${profileName}/edit`
+        if ('ERR' in data || 'error' in data ) {
+            console.log(cookies.username, profileName);
+            if (cookies.username === profileName){
+                window.location.href = `/profile/${profileName}/edit`
+            }
+            else{
+                Display = () => <p>Profile Does Not Exist</p>;
+            }
         } 
         else{
             Display = () => <MainProfilePage profileData={data} />;

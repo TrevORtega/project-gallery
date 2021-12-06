@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Card, Row, Col, Button, Accordion, Carousel, Stack } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { DefaultNav } from "../nav/Nav";
 import { CodeBlock } from "../submissionModal/snippets";
+import { ContentContainer, MainContainer } from "../theme/mainTheme";
 
 import { SaveProject, FileListToUrlList, FileToUrl, LoadProject } from "./ProjectApi";
 
@@ -180,7 +182,16 @@ export const SavedProject = () => {
         Display = () => <p>Loading...</p>;
     }
 
-    return <Display /> 
+    return (
+        <MainContainer>
+            <Row>
+                <DefaultNav />
+            </Row>
+            <ContentContainer>
+                <Display />
+            </ContentContainer>
+        </MainContainer>
+    );
 }
 
 export const SavedProjectSmall = ({ id }) => {

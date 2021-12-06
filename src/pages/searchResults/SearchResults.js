@@ -20,12 +20,8 @@ const StyledProjectCardContainer = styled.div`
 
 const StyledRow = styled(Row)`
     background-color: white;
-    color: blue;
+    color: black;
     width: 20vw;
-
-    &:hover {
-        cursor: pointer;
-    }
 `;
 
 const StyledP = styled.h1`
@@ -76,16 +72,16 @@ export const SearchResults = ({ query }) => {
                         {`Search Results for: ${query}`}
                     </StyledP>
                     <StyledProjectCardContainer>
-                    {results ? ( 
-                        Object.keys(results['projects']).map(k => {
-                            return (
+                        {results ? ( 
+                            Object.keys(results['projects']).map(k => {
+                                return (
                                     <StyledRow>
                                         <SavedProjectSmall id={k} />
-                                </StyledRow>
-                            );
-                        })
-                    ) : 'Searching...'
-                    } 
+                                    </StyledRow>
+                                );
+                            })
+                        ) : 'Searching...'
+                        } 
                     </StyledProjectCardContainer>
 
                 </StyledSearchResultsContainer>
