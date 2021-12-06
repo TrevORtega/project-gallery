@@ -46,7 +46,7 @@ export const Login = () => {
         e.preventDefault();
 
         Object.entries(formOptions).forEach(([key, value]) => {
-            if (key !== 'password' && key !== 'email')
+            if (key !== 'password')
                 setCookies(key, value);
         });
     }

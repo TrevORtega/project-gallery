@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { Row, Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { useParams } from "react-router-dom";
 
 import { DefaultNav } from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
 import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
+import { LoadProfile } from './ProfileApi';
 import stock from '../../images/default_photo.jpg'
 
 // CSS for main component for profile page here
@@ -14,7 +16,7 @@ const StyledProfile = styled.div`
     	border-radius: 30px;
     }
     h1 {
-    color: #fff;
+    color: #000;
     }
 
     h3 {
@@ -46,46 +48,46 @@ const StyledProfile = styled.div`
     }
 `;
 
-const DefaultProfile = () => {
+const Profile = ({ username, about, experience, education }) => {
     const [profile, setUseProfile] = useState({
-        name: 'DefaultUser',
-        about: 'I\'m a CS student looking to get a job',
-        experience: 'N/A',
-        education: 'Sophomore at WWU',
-        projects: []
+        username,
+        about,
+        experience,
+        education 
     });
+    const projects = [];
 
     return (
         <>
             <div class="container">
                 <div class = "content">
-                    <h1>Hi! I'm DefaultUser</h1>
+                    <h1>{`@${username}`}</h1>
                 </div>
                 <div class="thumb">
                     <img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default avatar" />
                 </div>
             </div>
             <h3>About</h3>
-            <p>{profile.name}</p>
-            <h3>Experience</h3>
             <p>{profile.about}</p>
+            <h3>Experience</h3>
+            <p>{profile.experience}</p>
             <h3>Education</h3>
             <p>{profile.education}</p>
             <h3>Projects</h3>
-            <p>{profile.projects}</p>
+            <p>{projects}</p>
         </>
     );
 }
 
-const ProfileContent = ({ setModalMode }) => {
+const ProfileContent = ({ profileData, setModalMode }) => {
     return (
         <ContentContainer>
             <StyledProfile>
-                <DefaultProfile />    
+                <Profile {...profileData} />    
                 <Button size='sm' onClick={() => setModalMode(true)}>
                     New Project
                 </Button>
-                <Button size='sm' href="/profile/edit" >
+                <Button size='sm' href={window.location.href + '/edit'} >
                     Edit Profile
                 </Button>
             </StyledProfile>
@@ -94,7 +96,7 @@ const ProfileContent = ({ setModalMode }) => {
 }
 
 
-export const Profile = () => {
+export const MainProfilePage = ({ profileData }) => {
     const [modalMode, setModalMode] = useState(false);
 
     return (
@@ -103,7 +105,31 @@ export const Profile = () => {
                 <DefaultNav />
             </Row>
             {modalMode ? <SubmissionModal />
-                : <ProfileContent setModalMode={setModalMode}/>}
+                : <ProfileContent profileData={profileData} setModalMode={setModalMode}/>}
         </MainContainer>
     );
+}
+
+export const DynamicProfile = () => {
+    const [data, setData] = useState(null);
+    const { profileName } = useParams();
+
+    LoadProfile({username: profileName, setData});
+    
+    let Display = null;
+    if (data) {
+        console.log('data-to-display -> ', data);
+        if ('ERR' in data || 'error' in data){
+            Display = () => <p>Profile Does Not Exist</p>;
+            //window.location.href = `/profile/${profileName}/edit`
+        } 
+        else{
+            Display = () => <MainProfilePage profileData={data} />;
+        }
+    }
+    else{
+        Display = () => <p>Loading...</p>;
+    }
+
+    return <Display /> 
 }

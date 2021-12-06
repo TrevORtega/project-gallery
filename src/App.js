@@ -8,10 +8,10 @@ import {
 } from "react-router-dom";
 
 import { DefaultNav } from './components/nav/Nav.js';
-import { Profile } from './pages/profile/Profile.js';
+import { DynamicProfile } from './pages/profile/Profile.js';
 import { SearchResults } from './pages/searchResults/SearchResults.js'
 import { NoPage } from './pages/noPage/NoPage.js'
-import { edit } from './pages/profile/EditProfile.js';
+import { EditProfile } from './pages/profile/EditProfile.js';
 import { MainContainer, ContentContainer } from './components/theme/mainTheme.js';
 import { Login } from './pages/login/Login.js';
 import { useCookies } from 'react-cookie';
@@ -84,8 +84,9 @@ function RouterApp(){
         <Switch>
           <Route exact path="/" component={App} />
 
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/profile/edit" component={edit} />
+          {/*<Route exact path="/profile" component={Profile} />*/}
+          <Route exact path="/profile/:profileName" component={DynamicProfile} />
+          <Route path="/profile/:profileName/edit" component={EditProfile} />
 
           <Route path="/project/:projectId" component={SavedProject} />
 

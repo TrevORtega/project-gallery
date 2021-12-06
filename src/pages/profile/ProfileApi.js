@@ -1,32 +1,19 @@
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { Redirect, useHistory } from "react-router";
+import { Redirect } from "react-router";
 
-export const FileListToUrlList = (fileList) => {
-    return Array.from(fileList)?.map(
-            x => x && FileToUrl(x));
-};
 
-export const FileToUrl = (file) => {
-    return URL.createObjectURL(file);
-};
-
-export const SaveProject = ({ modalValues }) => {
-    const [cookies, setCookies] = useCookies();
+export const SaveProfile = ({ profileData }) => {
     useEffect(() => {
-        if (!Array.isArray(modalValues.imageUrls)){
-            modalValues.imageUrls = FileListToUrlList(modalValues.imageUrls);
-            modalValues.videoUrl = modalValues.videoUrl && FileToUrl(modalValues.videoUrl);
-
-        }
         sendToApi();
     }, [])
 
+    const [cookies, setCookies] = useCookies();
     const sendToApi = () => {
-        modalValues.username = cookies.username; 
-        modalValues.email = cookies.email;
-        const body = JSON.stringify(modalValues);
-        const request = new Request('http://localhost:1111/api/save-project', {
+
+        profileData.email = cookies.email;
+        const body = JSON.stringify(profileData);
+        const request = new Request('http://localhost:1111/api/save-profile', {
             'method': 'POST',
             'headers': {
                 'Content-Type': 'text/plain'
@@ -40,19 +27,17 @@ export const SaveProject = ({ modalValues }) => {
             });
     }
 
-    const hist = useHistory();
-    hist.go(0);
-    return <h1>Saved!</h1>; 
+    return <Redirect to={`/profile/${cookies.username}`} />
 }
 
-export const LoadProject = ({ id, setData }) => {
+export const LoadProfile = ({ username, setData }) => {
     useEffect(() => {
         loadFromApi();
     }, [])
 
     const loadFromApi = () => {
-        const body = JSON.stringify({'id': id});
-        const request = new Request('http://localhost:1111/api/load-project', {
+        const body = JSON.stringify({'username': username});
+        const request = new Request('http://localhost:1111/api/load-profile', {
             'method': 'POST',
             'headers': {
                 'Content-Type': 'text/plain'

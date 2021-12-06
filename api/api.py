@@ -42,7 +42,6 @@ def save_project():
 
 @app.route('/api/load-project', methods=["POST"])
 def get_project():
-    load_location = DOWNLOAD_LOCATION / 'projects/jsons'
     # Only value we are intersted in
     key = 'id'
     input_json = request.get_json(force=True)
@@ -53,8 +52,11 @@ def get_project():
     project_path = str(DOWNLOAD_LOCATION / 'projects/jsons' / f'{id}.json')
 
     values = None
-    with open(project_path) as f:
-        values = json.load(f)
+    try:
+        with open(project_path) as f:
+            values = json.load(f)
+    except FileNotFoundError:
+        pass
     
     if values is None:
         values = {'error': 'file does not exist'}    
@@ -103,7 +105,54 @@ def search_projects():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
    
+@app.route('/api/save-profile', methods=["POST"])
+def save_profile():
+    save_location = DOWNLOAD_LOCATION / 'profiles'
+    # Only values we are intersted in
+    keys = ['username', 'about', 'experience', 'education', 'email']
 
+    input_json = request.get_json(force=True)
+    # ID is the number of current projects + 1
+    id = input_json['username'] + '.json'
+
+    #for i, image_url in enumerate(input_json['imageUrls']):
+    #    urllib.request.urlretrieve(image_url, 
+    #        DOWNLOAD_LOCATION / f'projects/images/{id}-{i}.jpeg')
+
+    with open(save_location / id, 'w+') as f:
+        dict_values = {k: input_json[k] for k in keys}
+        json.dump(dict_values, f)
+
+    response = jsonify(input_json)
+    # Fixes CORS errors
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response 
+
+@app.route('/api/load-profile', methods=["POST"])
+def get_profile():
+    # Only value we are intersted in
+    key = 'username'
+    input_json = request.get_json(force=True)
+
+    # ID is the number of current projects + 1
+    username = input_json[key]
+
+    project_path = str(DOWNLOAD_LOCATION / 'profiles' / f'{username}.json')
+
+    values = None
+    try:
+        with open(project_path) as f:
+            values = json.load(f)
+    except FileNotFoundError:
+        pass
+    
+    if values is None:
+        values = {'error': 'file does not exist'}    
+
+    response = jsonify(values)
+    # Fixes CORS errors
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=1111)

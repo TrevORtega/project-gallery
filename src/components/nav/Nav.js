@@ -23,17 +23,18 @@ const StyledNavDropdown = styled(NavDropdown)`
 // Check bootstrap Nav/Navbar docs to change Nav settings
 export const DefaultNav = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
-    const showProfile =  cookies?.username;
+    const profile = cookies?.username;
     const logOut = () => {
         removeCookie('username');
+        window.location.reload();
     }
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
             <Container fluid={true}>
                 <Navbar.Brand href="/">Project Gallery</Navbar.Brand>
-                    {showProfile ? 
+                    {profile ? 
                             <StyledNavDropdown title="Profile" id="nav-dropdown">
-                                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                                <NavDropdown.Item href={"/profile/" + profile}>Profile</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item as="button" onClick={logOut}>Log out</NavDropdown.Item>
                             </StyledNavDropdown>
