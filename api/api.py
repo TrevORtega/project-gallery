@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from pathlib import Path
 import json
-import urllib.request
+import requests
 
 DOWNLOAD_LOCATION = Path('../data')
 
@@ -24,12 +24,19 @@ def save_project():
         'imageUrls', 'videoUrl', 'code', 'language', 'username']
 
     input_json = request.get_json(force=True)
-    # ID is the number of current projects + 1
-    id = str(len(list(save_location.iterdir())) + 1) + '.json'
 
-    #for i, image_url in enumerate(input_json['imageUrls']):
-    #    urllib.request.urlretrieve(image_url, 
-    #        DOWNLOAD_LOCATION / f'projects/images/{id}-{i}.jpeg')
+    # ID is the biggest of current projects + 1
+    id = str(max(
+            [int(name.stem) for name in save_location.iterdir()]
+        ) + 1) + '.json'
+
+    for i, image_url in enumerate(input_json['imageUrls']):
+        img_data = requests.get(image_url.replace('blob:', '')).content
+        metal_url = DOWNLOAD_LOCATION / f'projects/imgs/{id[:-5]}-{i}.jpeg'
+        with open(metal_url, 
+                'wb') as handler:
+            handler.write(img_data)
+            input_json['imageUrls'][i] = str(metal_url) 
 
     with open(save_location / id, 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}
@@ -87,7 +94,6 @@ def search_projects():
             ' '.join(l.lower() for l in proj_json['language'])
         ]
 
-        print(searchables)
         # Count how many times any of the search queries appear
         # in the searchable text 
         total = sum([1 for q in query 

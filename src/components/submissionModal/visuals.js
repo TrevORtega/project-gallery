@@ -22,11 +22,10 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const Page = pages[modalValues.state];
 
-    // FileList should contain jpg and png files
-    const validScreenshots =  fileListHasImageFiles(formValues.imageUrls); 
+    const validScreenshots = formValues.imageUrls.length > 0;
     
     // Video should be an mp4 file
-    const validVideo = formValues.videoUrl?.name?.endsWith('.mp4');
+    const validVideo = formValues.videoUrl !== null;
     const validSubmit = validScreenshots || validVideo;
 
     const setValues = (e) => {
@@ -68,8 +67,8 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
                         <Form.Control 
                             name="imageUrls"
                             type="file" 
+                            accept="image/png, image/jpeg, image/jpg"
                             required 
-                            isInvalid={!validScreenshots} 
                             isValid={validScreenshots} 
                             multiple 
                             onChange={setValues}
@@ -78,8 +77,8 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
                         <Form.Control 
                             name="videoUrl"
                             type="file" 
+                            accept=".mp4"
                             isValid={validVideo}
-                            isInvalid={!validVideo}
                             onChange={setValues}
                         />
 

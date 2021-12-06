@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Button, Accordion, Carousel, Stack } from "react-bootstrap";
+import { Card, Row, Col, Button, Accordion, Carousel, Stack } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CodeBlock } from "../submissionModal/snippets";
@@ -91,6 +91,10 @@ export const Project = ({ modalValues }) => {
         code, 
         language 
     } = modalValues;
+    const activeImageUrls = imageUrls//.map(x => URL.createObjectURL(
+    //    x
+    //));
+    const activeVideoUrl = videoUrl// && URL.createObjectURL(videoUrl);
     return (
         <Stack>
             <h1>{name}</h1>
@@ -99,8 +103,8 @@ export const Project = ({ modalValues }) => {
             /> 
             <a href={sourceLink}>{sourceLink}</a>
             <ImageAccordianWithDemo 
-                imageUrls={imageUrls}
-                videoUrl={videoUrl}
+                imageUrls={activeImageUrls}
+                videoUrl={activeVideoUrl}
             />
             <StyledSnippetBlocks
                 code={code}
@@ -191,9 +195,16 @@ export const SavedProjectSmall = ({ id }) => {
         else{
             Display = () => {
                 return (
-                    <div >
-                        <a href={`/project/${id}`}>{data.name}</a>
-                    </div>
+                    <Card style={{ width: '20rem' }}>
+                        <Card.Body>
+                            <Card.Title>{data.name}</Card.Title>
+                            <Card.Text>
+                               {data.description} 
+                            </Card.Text>
+                            <Card.Link href={`/project/${id}`}>Gallery</Card.Link>
+                            <Card.Link href={data.sourceLink}>Source</Card.Link>
+                        </Card.Body>
+                    </Card>
                 );
             }
         }

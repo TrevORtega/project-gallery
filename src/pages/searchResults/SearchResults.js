@@ -9,7 +9,13 @@ import { SavedProjectSmall } from '../../components/project/Project';
 const StyledSearchResultsContainer = styled(Stack)`
     text-align: center;
     display: flex;
-    align-items: center;
+`;
+
+const StyledProjectCardContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 `;
 
 const StyledRow = styled(Row)`
@@ -23,7 +29,8 @@ const StyledRow = styled(Row)`
 `;
 
 const StyledP = styled.h1`
-    text-color: white;
+    color: black;
+    height: 10vh;
 `;
 
 const SearchFiles = (query, setResults) => {
@@ -68,16 +75,19 @@ export const SearchResults = ({ query }) => {
                     <StyledP>
                         {`Search Results for: ${query}`}
                     </StyledP>
-                   {results ? ( 
-                       Object.keys(results['projects']).map(k => {
-                           return (
-                                <StyledRow>
-                                    <SavedProjectSmall id={k} />
-                               </StyledRow>
-                           );
-                       })
-                   ) : 'Searching...'
-                   } 
+                    <StyledProjectCardContainer>
+                    {results ? ( 
+                        Object.keys(results['projects']).map(k => {
+                            return (
+                                    <StyledRow>
+                                        <SavedProjectSmall id={k} />
+                                </StyledRow>
+                            );
+                        })
+                    ) : 'Searching...'
+                    } 
+                    </StyledProjectCardContainer>
+
                 </StyledSearchResultsContainer>
             </ContentContainer>
         </MainContainer>
