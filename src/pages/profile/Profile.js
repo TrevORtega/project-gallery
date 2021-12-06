@@ -8,6 +8,7 @@ import { ContentContainer, MainContainer } from '../../components/theme/mainThem
 import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
 import { LoadProfile } from './ProfileApi';
 import stock from '../../images/default_photo.jpg'
+import { useCookies } from 'react-cookie';
 
 // CSS for main component for profile page here
 const StyledProfile = styled.div`
@@ -80,16 +81,25 @@ const Profile = ({ username, about, experience, education }) => {
 }
 
 const ProfileContent = ({ profileData, setModalMode }) => {
+    const [cookies, setCookies] = useCookies();
+    const profileName = profileData.username;
+    const username = cookies.username; 
     return (
         <ContentContainer>
             <StyledProfile>
                 <Profile {...profileData} />    
-                <Button size='sm' onClick={() => setModalMode(true)}>
-                    New Project
-                </Button>
-                <Button size='sm' href={window.location.href + '/edit'} >
-                    Edit Profile
-                </Button>
+                {username === profileName ? 
+                    (
+                        <>
+                        <Button size='sm' onClick={() => setModalMode(true)}>
+                        New Project
+                        </Button>
+                        <Button size='sm' href={window.location.href + '/edit'} >
+                            Edit Profile
+                        </Button>
+                    </>
+                    ) : <></>
+                }
             </StyledProfile>
         </ContentContainer>
     );
