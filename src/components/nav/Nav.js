@@ -25,8 +25,7 @@ export const DefaultNav = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const profile = cookies?.username;
     const logOut = () => {
-        removeCookie('username');
-        window.location.reload();
+        removeCookie('username', { path: '/' });
     }
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
