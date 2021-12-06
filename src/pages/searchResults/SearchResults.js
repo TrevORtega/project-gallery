@@ -44,8 +44,7 @@ const SearchFiles = (query, setResults) => {
         fetch(request)
             .then(response => response.json())
             .then(data => {
-                console.log('response:', data)
-                setResults({...data})
+                setResults({...data});
             })
             .catch(err => {
                 console.log('ERR: ', err);
@@ -58,7 +57,6 @@ const SearchFiles = (query, setResults) => {
 
 export const SearchResults = ({ query }) => {
     const [results, setResults] = useState(null);
-    console.log('results -> ', results);
     SearchFiles(query, setResults); 
     return (
         <MainContainer>

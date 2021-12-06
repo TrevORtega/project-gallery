@@ -128,7 +128,6 @@ export const DynamicProfile = () => {
     
     let Display = null;
     if (data) {
-        console.log('data-to-display -> ', data);
         if ('ERR' in data || 'error' in data){
             Display = () => <p>Profile Does Not Exist</p>;
             //window.location.href = `/profile/${profileName}/edit`

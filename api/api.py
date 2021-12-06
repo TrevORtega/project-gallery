@@ -87,6 +87,7 @@ def search_projects():
             ' '.join(l.lower() for l in proj_json['language'])
         ]
 
+        print(searchables)
         # Count how many times any of the search queries appear
         # in the searchable text 
         total = sum([1 for q in query 

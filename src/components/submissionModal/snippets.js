@@ -147,7 +147,6 @@ export const Snippets = ({pages, modalValues, setModalValues}) => {
             code: snippetValues.code.push(''),
             language: snippetValues.language.push('Choose Language')
         });
-        console.log(snippetValues.code, snippetValues.language);
     };
 
     const Snippets = snippetValues.code.map((_, i) => (

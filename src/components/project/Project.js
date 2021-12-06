@@ -44,6 +44,7 @@ const ImageAccordianWithDemo = ({imageUrls, videoUrl=null}) => {
                         alt={`Project Screenshot Number ${i}`}
                     />
                 </Carousel.Item>
+                
             ))}
             {videoUrl ? (
                 <Carousel.Item>
@@ -54,7 +55,7 @@ const ImageAccordianWithDemo = ({imageUrls, videoUrl=null}) => {
                     />
                 </Carousel.Item>
 
-            ) : <></>
+            ) : null 
             }
         </Carousel>
     );
@@ -96,7 +97,7 @@ export const Project = ({ modalValues }) => {
             <DescriptionAccordion 
                 description={description}
             /> 
-            <a>{sourceLink}</a>
+            <a href={sourceLink}>{sourceLink}</a>
             <ImageAccordianWithDemo 
                 imageUrls={imageUrls}
                 videoUrl={videoUrl}
@@ -160,7 +161,6 @@ export const SavedProject = () => {
     
     let Display = null;
     if (data) {
-        console.log('data-to-display -> ', data);
         if ('ERR' in data){
             Display = () => <p>Project Does Not Exist</p>;
         } 
@@ -185,7 +185,6 @@ export const SavedProjectSmall = ({ id }) => {
     
     let Display = null;
     if (data) {
-        console.log('data-to-display -> ', data);
         if ('ERR' in data){
             Display = () => <p>Project Does Not Exist</p>;
         } 

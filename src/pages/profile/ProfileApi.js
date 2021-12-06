@@ -48,7 +48,6 @@ export const LoadProfile = ({ username, setData }) => {
         fetch(request)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 setData({...data})
             })
             .catch(err => {

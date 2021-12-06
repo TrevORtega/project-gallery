@@ -17,7 +17,6 @@ export const EditProfile = () => {
     
     let Display = null;
     if (data) {
-        console.log('data-to-display -> ', data);
         if ('ERR' in data || 'error' in data){
             const defaults = {
                 username: profileName,
@@ -48,7 +47,6 @@ const EditProfileForm = ({ defaults }) => {
     const submitHandler = e => {
         e.preventDefault();
 
-        console.log('sub -> ', profileData);
         setIsSubmitted(true); 
     }
 
@@ -69,6 +67,7 @@ const EditProfileForm = ({ defaults }) => {
                                         as="textarea"
                                         rows="5" 
                                         onChange={e => changeHandler('about', e)}
+                                        value={profileData.about}
                                     >
                                     </Form.Control>
                             </Col>
@@ -82,6 +81,7 @@ const EditProfileForm = ({ defaults }) => {
                                         as="textarea" 
                                         rows="5" 
                                         onChange={e => changeHandler('experience', e)}
+                                        value={profileData.experience}
                                     >
                                     </Form.Control>
                             </Col>
@@ -95,9 +95,17 @@ const EditProfileForm = ({ defaults }) => {
                                         as="textarea" 
                                         rows="5"
                                         onChange={e => changeHandler('education', e)}
+                                        value={profileData.education}
                                     >
                                     </Form.Control>
-                                <Button type="submit" variant="primary" size="sm" >Submit</Button>
+                                <Button 
+                                    type="submit" 
+                                    variant="primary" 
+                                    size="sm" 
+                                    disabled={Object.values(profileData)?.filter(x => x?.length === 0) > 0}
+                                >
+                                    Submit
+                                </Button>
                             </Col>
                         </Row>
 
