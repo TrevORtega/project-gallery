@@ -55,9 +55,9 @@ const StyledProfile = styled.div`
 
 const pStyles = {
     color: '#fff',
-    'padding-left': '40px',
-    'text-align': 'left',
-    'padding-bottom': '40px'
+    'paddingLeft': '40px',
+    'textAlign': 'left',
+    'paddingBottom': '40px'
 };
 
 const Profile = ({ username, about, experience, education }) => {
@@ -67,7 +67,6 @@ const Profile = ({ username, about, experience, education }) => {
         experience,
         education 
     });
-    const Projects = <SearchResultsProfileProjects username={username} />
 
     return (
         <>
@@ -94,7 +93,7 @@ const Profile = ({ username, about, experience, education }) => {
             </div>
             <h2>Projects</h2>
             <div class="container" className="w-50">
-                {<Projects />}
+                <SearchResultsProfileProjects username={username} />
             </div>
         </>
     );

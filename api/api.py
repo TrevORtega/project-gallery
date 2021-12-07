@@ -130,12 +130,12 @@ def search_projects():
     return response
    
 @app.route('/api/search-projects-profile', methods=["POST"])
-def search_projects():
+def search_projects_profile():
     key = 'query'
     input_json = request.get_json(force=True)
 
     # Get query string, turn it to lower case list of words
-    query = input_json[key]
+    query = input_json[key]['username']
 
     project_locations = DOWNLOAD_LOCATION + "projects/jsons/"
     project_list = []

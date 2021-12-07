@@ -200,7 +200,7 @@ export const SavedProjectSmall = ({ id }) => {
     
     let Display = null;
     if (data) {
-        if ('ERR' in data){
+        if ('ERR' in data || 'error' in data){
             Display = () => <p>Project Does Not Exist</p>;
         } 
         else{

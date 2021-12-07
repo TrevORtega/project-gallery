@@ -31,15 +31,14 @@ const StyledP = styled.h1`
 
 
 export const SearchResultsProfileProjects = (username) => {
-    const url = 'http://localhost:1111/api/search-projects'
+    const url = 'http://localhost:1111/api/search-projects-profile'
     const [results, setResults] = useState(null);
     SearchFiles(username, setResults, url); 
 
-    console.log('res -> ', results);
     return (
         <StyledProjectCardContainer>
             {results?.projects ? ( 
-                Object.keys(results.projects).map(k => {
+                results.projects.map(k => {
                     return (
                         <StyledRow>
                             <SavedProjectSmall id={k} />
