@@ -139,14 +139,20 @@ def search_projects_profile():
 
     project_locations = DOWNLOAD_LOCATION + "projects/jsons/"
     project_list = []
-    # Go through every project we have
-    for project_name in os.listdir(project_locations):
-        project = os.path.join(project_locations, project_name)
-        proj_json = json.load(open(project))
 
-        # Find if the username is in the project json 
-        if 'username' in proj_json and proj_json['username'] == query:
-            project_list.append(project_name.split('.')[0])
+    # Go through every project we have
+    if os.path.isdir(project_locations):
+        for project_name in os.listdir(project_locations):
+            project = os.path.join(project_locations, project_name)
+            proj_json = json.load(open(project))
+
+            # Find if the username is in the project json 
+            if 'username' in proj_json and proj_json['username'] == query:
+                project_list.append(project_name.split('.')[0])
+
+    # make the directory if it doesn't already exist
+    else:
+        os.makedirs(project_locations)
 
     # Return as json (don't change this)
     response = jsonify({'projects': project_list})
@@ -194,7 +200,7 @@ def get_profile():
     input_json = request.get_json(force=True)
 
     # ID is the number of current projects + 1
-    username = input_json[key]
+    username = str(input_json[key])
 
     project_path = str(DOWNLOAD_LOCATION) + "/profiles/" + str(f'{username}.json')
 
