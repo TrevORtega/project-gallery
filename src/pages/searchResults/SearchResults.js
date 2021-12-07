@@ -29,14 +29,38 @@ const StyledP = styled.h1`
     height: 10vh;
 `;
 
-const SearchFiles = (query, setResults) => {
+
+export const SearchResultsProfileProjects = (username) => {
+    const url = 'http://localhost:1111/api/search-projects'
+    const [results, setResults] = useState(null);
+    SearchFiles(username, setResults, url); 
+
+    console.log('res -> ', results);
+    return (
+        <StyledProjectCardContainer>
+            {results?.projects ? ( 
+                Object.keys(results.projects).map(k => {
+                    return (
+                        <StyledRow>
+                            <SavedProjectSmall id={k} />
+                        </StyledRow>
+                    );
+                })
+            ) : 'Searching...'
+            } 
+        </StyledProjectCardContainer>
+    )
+}
+
+
+const SearchFiles = (query, setResults, url='http://localhost:1111/api/search-projects') => {
     useEffect(() => {
         loadFromApi();
     }, [])
 
     const loadFromApi = () => {
         const body = JSON.stringify({'query': query});
-        const request = new Request('http://localhost:1111/api/search-projects', {
+        const request = new Request(url, {
             'method': 'POST',
             'headers': {
                 'Content-Type': 'text/plain'

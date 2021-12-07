@@ -129,6 +129,31 @@ def search_projects():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
    
+@app.route('/api/search-projects-profile', methods=["POST"])
+def search_projects():
+    key = 'query'
+    input_json = request.get_json(force=True)
+
+    # Get query string, turn it to lower case list of words
+    query = input_json[key]
+
+    project_locations = DOWNLOAD_LOCATION + "projects/jsons/"
+    project_list = []
+    # Go through every project we have
+    for project_name in os.listdir(project_locations):
+        project = os.path.join(project_locations, project_name)
+        proj_json = json.load(open(project))
+
+        # Find if the username is in the project json 
+        if 'username' in proj_json and proj_json['username'] == query:
+            project_list.append(project_name.split('.')[0])
+
+    # Return as json (don't change this)
+    response = jsonify({'projects': project_list})
+    # Fixes CORS errors
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 @app.route('/api/save-profile', methods=["POST"])
 def save_profile():
     save_location = DOWNLOAD_LOCATION + 'profiles/'

@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { Row, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 import { DefaultNav } from '../../components/nav/Nav';
 import { ContentContainer, MainContainer } from '../../components/theme/mainTheme';
 import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
 import { LoadProfile } from './ProfileApi';
+import { SearchResultsProfileProjects } from '../searchResults/SearchResults';
 import stock from '../../images/default_photo.jpg'
-import { useCookies } from 'react-cookie';
 
 // CSS for main component for profile page here
 const StyledProfile = styled.div`
@@ -66,7 +67,7 @@ const Profile = ({ username, about, experience, education }) => {
         experience,
         education 
     });
-    const projects = [];
+    const Projects = <SearchResultsProfileProjects username={username} />
 
     return (
         <>
@@ -93,7 +94,7 @@ const Profile = ({ username, about, experience, education }) => {
             </div>
             <h2>Projects</h2>
             <div class="container" className="w-50">
-                <p style={pStyles}>{profile.projects}</p>
+                {<Projects />}
             </div>
         </>
     );
