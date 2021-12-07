@@ -7,10 +7,12 @@ import { Row, Col, Stack } from 'react-bootstrap';
 //import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
 import { SearchResults } from '../../pages/searchResults/SearchResults.js';
 import { useState } from "react";
+import { LoadProfile, SaveProfile } from './ProfileApi';
 
 const StyledText = styled.p`
     background-color: red;
 `;
+
 
 const ShowBar = ({ submitFunc }) => {
     return(
@@ -23,7 +25,7 @@ const ShowBar = ({ submitFunc }) => {
                     <Form.Group>
                         <Stack direction="horizontal">
                             <Form.Control type="text" name="search" size="lg" placeholder="Github User Name"/>
-                            <Button size="lg" type="submit">Submit</Button>
+                            <Button size="lg" variant="outline-light" type="submit">Submit</Button>
                         </Stack>
                         </Form.Group>
                     </Col>
