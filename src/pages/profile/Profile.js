@@ -20,7 +20,7 @@ const StyledProfile = styled.div`
     color: #000;
     }
 
-    h3 {
+    h2 {
     padding-left: 40px;
     text-align: left;
     color: #fff;
@@ -35,8 +35,10 @@ const StyledProfile = styled.div`
     overflow: auto;
     }
 
+
     .thumb {
     float: right;
+    padding-top: 50px;
     }
 
     .thumb img {
@@ -47,7 +49,15 @@ const StyledProfile = styled.div`
     float: left;
     margin-top: 60px;
     }
+
 `;
+
+const pStyles = {
+    color: '#fff',
+    'padding-left': '40px',
+    'text-align': 'left',
+    'padding-bottom': '40px'
+};
 
 const Profile = ({ username, about, experience, education }) => {
     const [profile, setUseProfile] = useState({
@@ -62,20 +72,29 @@ const Profile = ({ username, about, experience, education }) => {
         <>
             <div class="container">
                 <div class = "content">
-                    <h1>{`@${username}`}</h1>
+                    <h1 class = "display-1 fw-bolder">{`@${username}`}</h1>
                 </div>
                 <div class="thumb">
-                    <img src = {stock} height = "200" width = "200" class = "rounded-corners" alt="default avatar" />
+                    <img src = {stock} height = "200" width = "200" class = "rounded-corners"  alt="default avatar" />
                 </div>
             </div>
-            <h3>About</h3>
-            <p>{profile.about}</p>
-            <h3>Experience</h3>
-            <p>{profile.experience}</p>
-            <h3>Education</h3>
-            <p>{profile.education}</p>
-            <h3>Projects</h3>
-            <p>{projects}</p>
+            <h2>About</h2>
+            <div class="container" className="w-50">
+                <p style={pStyles}>{profile.about}</p>
+            </div>
+            
+            <h2>Experience</h2>
+            <div class="container" className="w-50">
+                <p style={pStyles}>{profile.experience}</p>
+            </div>
+            <h2>Education</h2>
+            <div class="container" className="w-50">
+                <p style={pStyles}>{profile.education}</p>
+            </div>
+            <h2>Projects</h2>
+            <div class="container" className="w-50">
+                <p style={pStyles}>{profile.projects}</p>
+            </div>
         </>
     );
 }
@@ -91,10 +110,11 @@ const ProfileContent = ({ profileData, setModalMode }) => {
                 {username === profileName ? 
                     (
                         <>
-                        <Button size='sm' onClick={() => setModalMode(true)}>
+                        <Button size='sm' variant='outline-light' onClick={() => setModalMode(true)}>
                         New Project
                         </Button>
-                        <Button size='sm' href={window.location.href + '/edit'} >
+                        <p></p>
+                        <Button size='sm' variant='outline-light' href={window.location.href + '/edit'} >
                             Edit Profile
                         </Button>
                     </>
