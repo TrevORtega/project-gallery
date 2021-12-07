@@ -82,7 +82,7 @@ const Profile = ({ username, about, experience, education, github }) => {
                 </div>
                 <div class="thumb">
                     <img src = {stock} height = "200" width = "200" class = "rounded-corners"  alt="default avatar" />
-                    <h5>{github}</h5>
+                    <h5>{profile.github}</h5>
                 </div>
             </div>
             <h2>About</h2>
