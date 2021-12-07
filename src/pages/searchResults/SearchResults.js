@@ -15,7 +15,6 @@ const StyledProjectCardContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    flex-wrap: wrap;
 `;
 
 const StyledRow = styled(Row)`

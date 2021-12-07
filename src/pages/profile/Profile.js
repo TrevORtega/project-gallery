@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Button } from 'react-bootstrap';
+import { Row, Button, Stack } from 'react-bootstrap';
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
@@ -63,6 +63,16 @@ const StyledProfile = styled.div`
 
 `;
 
+const ButtonContainer = styled(Stack)`
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+`;
+
+const StyledButton = styled(Button)`
+    margin: 0 0 5px 5px;
+`;
+
 const pStyles = {
     color: '#fff',
     'paddingLeft': '40px',
@@ -104,7 +114,7 @@ const Profile = ({ username, about, experience, education, github=''}) => {
                 <p style={pStyles}>{profile.education}</p>
             </div>
             <h2>Projects</h2>
-            <div class="container" className="w-50">
+            <div className="projContainer">
                 <SearchResultsProfileProjects username={username} />
             </div>
         </>
@@ -121,19 +131,19 @@ const ProfileContent = ({ profileData, setModalMode }) => {
                 <Profile {...profileData} />    
                 {username === profileName ? 
                     (
-                        <>
-                        <Button size='sm' variant='outline-light' onClick={() => setModalMode(true)}>
-                        New Project
-                        </Button>
-                        <p></p>
-                        <Button size='sm' variant='outline-light' href={window.location.href + '/edit'} >
-                            Edit Profile
-                        </Button>
-                        <p></p>
-                        <Button size='sm' variant='outline-light' href={window.location.href + '/findGit'} >
-                            Add Github
-                        </Button>
-                    </>
+                        <ButtonContainer direction="horizontal">
+                            <StyledButton size='sm' variant='outline-light' onClick={() => setModalMode(true)}>
+                            New Project
+                            </StyledButton>
+                            <p></p>
+                            <StyledButton size='sm' variant='outline-light' href={window.location.href + '/edit'} >
+                                Edit Profile
+                            </StyledButton>
+                            <p></p>
+                            <StyledButton size='sm' variant='outline-light' href={window.location.href + '/findGit'} >
+                                Add Github
+                            </StyledButton>
+                        </ButtonContainer>
                     ) : <></>
                 }
             </StyledProfile>
