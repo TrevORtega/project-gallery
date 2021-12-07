@@ -163,8 +163,10 @@ def save_profile():
 
     # Only values we are intersted in
     keys = ['username', 'about', 'experience', 'education', 'email']
+    optional_keys = ['github']
 
     input_json = request.get_json(force=True)
+    print(input_json)
     # ID is the number of current projects + 1
     id = str(input_json['username']) + ".json"
 
@@ -174,6 +176,10 @@ def save_profile():
 
     with open(os.path.join(save_location, id), 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}
+        for k in optional_keys:
+            if k in input_json:
+                dict_values[k] = input_json[k]
+
         json.dump(dict_values, f)
 
     response = jsonify(input_json)

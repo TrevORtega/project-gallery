@@ -4,11 +4,9 @@ import { ContentContainer, MainContainer } from '../../components/theme/mainThem
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import { Row, Col, Stack } from 'react-bootstrap';
-//import { SubmissionModal } from '../../components/submissionModal/SubmissionModal';
-import { SearchResults } from '../../pages/searchResults/SearchResults.js';
 import { useState } from "react";
 import { LoadProfile, SaveProfile } from './ProfileApi';
-import { github } from 'react-code-blocks';
+import { useParams } from 'react-router';
 
 const StyledText = styled.p`
     background-color: red;
@@ -36,8 +34,11 @@ const ShowBar = ({ submitFunc }) => {
     )
 }
 
-export const GitProjects = ({defaults}) => {
-    const [profileData, setProfileData] = useState({...defaults});
+export const GitProjects = () => {
+    const [profileData, setProfileData] = useState(null);
+    const { profileName } = useParams();
+    LoadProfile({username: profileName, setData: setProfileData});
+
     const [githubName, setGithubName] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -48,7 +49,7 @@ export const GitProjects = ({defaults}) => {
     }
 
     const changeHandler = (name, e) => {
-        setProfileData({...profileData, [github]: e.target.value});
+        setProfileData({...profileData, [name]: e.target.value});
     }
 
 
@@ -64,7 +65,7 @@ export const GitProjects = ({defaults}) => {
             <Row className="justify-content-center p-3">
                 <Col md="8">
                     <h3>What is your Github Username?</h3>
-                <Form onChange={e => changeHandler('github', e)} onSubmit={submitFunc} value={profileData.github}>
+                <Form onChange={e => changeHandler('github', e)} onSubmit={submitFunc} value={profileData?.github || ''}>
                     <Stack direction="horizontal">
                         <Form.Control type="text" name="search" size="lg" placeholder="Github User Name"/>
                         <Button size="lg" variant="outline-light" type="submit">Submit</Button>

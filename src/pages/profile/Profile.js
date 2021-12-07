@@ -32,6 +32,11 @@ const StyledProfile = styled.div`
         font: italic;
     }
     
+    .git {
+        font-size: 1.25em;
+        color: black;
+    }
+
     p {
         text-align: left;
     }
@@ -65,7 +70,7 @@ const pStyles = {
     'paddingBottom': '40px'
 };
 
-const Profile = ({ username, about, experience, education, github }) => {
+const Profile = ({ username, about, experience, education, github=''}) => {
     const [profile, setUseProfile] = useState({
         username,
         about,
@@ -82,7 +87,7 @@ const Profile = ({ username, about, experience, education, github }) => {
                 </div>
                 <div class="thumb">
                     <img src = {stock} height = "200" width = "200" class = "rounded-corners"  alt="default avatar" />
-                    <h5>{profile.github}</h5>
+                    <a className="git" href={`https://github.com/${profile.github}`}>{`Github: ${profile.github}`}</a>
                 </div>
             </div>
             <h2>About</h2>
