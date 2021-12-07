@@ -21,6 +21,8 @@ You will also see any lint errors in the console.
 ### `python api.py`
 
 This command should be run from the api folder and will start up the backend server at: http://localhost:1111
+Run ```cd api```
+Then ```python api.py```
 
 ### Dependencies
 
