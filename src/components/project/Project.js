@@ -206,7 +206,7 @@ export const SavedProjectSmall = ({ id }) => {
         else{
             Display = () => {
                 return (
-                    <Card style={{ width: '20rem' }}>
+                    <Card style={{ width: '20rem', textAlign: 'center' }}>
                         <Card.Body>
                             <Card.Title>{data.name}</Card.Title>
                             <Card.Text>
