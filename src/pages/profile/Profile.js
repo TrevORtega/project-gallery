@@ -26,6 +26,11 @@ const StyledProfile = styled.div`
     text-align: left;
     color: #fff;
     }
+
+    h5 {
+        color: #000;
+        font: italic;
+    }
     
     p {
         text-align: left;
@@ -60,12 +65,13 @@ const pStyles = {
     'paddingBottom': '40px'
 };
 
-const Profile = ({ username, about, experience, education }) => {
+const Profile = ({ username, about, experience, education, github }) => {
     const [profile, setUseProfile] = useState({
         username,
         about,
         experience,
-        education 
+        education,
+        github 
     });
 
     return (
@@ -76,6 +82,7 @@ const Profile = ({ username, about, experience, education }) => {
                 </div>
                 <div class="thumb">
                     <img src = {stock} height = "200" width = "200" class = "rounded-corners"  alt="default avatar" />
+                    <h5>{profile.github}</h5>
                 </div>
             </div>
             <h2>About</h2>

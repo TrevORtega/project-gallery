@@ -22,7 +22,8 @@ export const EditProfile = () => {
                 username: profileName,
                 experience: '',
                 about: '',
-                education: ''
+                education: '',
+                github: ''
             }
             Display = () => ( <EditProfileForm defaults={defaults} /> );
         } 
@@ -100,7 +101,7 @@ const EditProfileForm = ({ defaults }) => {
                                     </Form.Control>
                                 <Button 
                                     type="submit" 
-                                    variant="primary" 
+                                    variant="outline-light" 
                                     size="sm" 
                                     disabled={Object.values(profileData)?.filter(x => x?.length === 0) > 0}
                                 >
