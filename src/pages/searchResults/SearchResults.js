@@ -72,8 +72,8 @@ export const SearchResults = ({ query }) => {
                         {`Search Results for: ${query}`}
                     </StyledP>
                     <StyledProjectCardContainer>
-                        {results ? ( 
-                            Object.keys(results['projects']).map(k => {
+                        {results?.projects ? ( 
+                            Object.keys(results.projects).map(k => {
                                 return (
                                     <StyledRow>
                                         <SavedProjectSmall id={k} />

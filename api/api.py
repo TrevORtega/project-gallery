@@ -30,6 +30,8 @@ def save_project():
             [int(name.stem) for name in save_location.iterdir()]
         ) + 1) + '.json'
 
+    '''
+    # Image saving
     for i, image_url in enumerate(input_json['imageUrls']):
         img_data = requests.get(image_url.replace('blob:', '')).content
         metal_url = DOWNLOAD_LOCATION / f'projects/imgs/{id[:-5]}-{i}.jpeg'
@@ -37,6 +39,7 @@ def save_project():
                 'wb') as handler:
             handler.write(img_data)
             input_json['imageUrls'][i] = str(metal_url) 
+    '''
 
     with open(save_location / id, 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}

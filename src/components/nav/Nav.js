@@ -25,7 +25,8 @@ export const DefaultNav = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const profile = cookies?.username;
     const logOut = () => {
-        removeCookie('username');
+        removeCookie('username', { path: '/'});
+        removeCookie('email', { path: '/' })
     }
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
@@ -35,7 +36,7 @@ export const DefaultNav = () => {
                             <StyledNavDropdown title="Profile" id="nav-dropdown">
                                 <NavDropdown.Item href={"/profile/" + profile}>Profile</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item as="button" onClick={logOut}>Log out</NavDropdown.Item>
+                                <NavDropdown.Item as="button" href="/" onClick={logOut}>Log out</NavDropdown.Item>
                             </StyledNavDropdown>
                         :
                             <Nav className="justify-content-center">
