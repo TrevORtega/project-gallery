@@ -117,6 +117,10 @@ const ProfileContent = ({ profileData, setModalMode }) => {
                         <Button size='sm' variant='outline-light' href={window.location.href + '/edit'} >
                             Edit Profile
                         </Button>
+                        <p></p>
+                        <Button size='sm' variant='outline-light' href={window.location.href + '/findGit'} >
+                            Add Github
+                        </Button>
                     </>
                     ) : <></>
                 }

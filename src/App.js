@@ -16,6 +16,7 @@ import { MainContainer, ContentContainer } from './components/theme/mainTheme.js
 import { Login } from './pages/login/Login.js';
 import { useCookies } from 'react-cookie';
 import { SavedProject } from './components/project/Project.js';
+import { GitProjects } from './pages/profile/gitProject.js';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -87,7 +88,7 @@ function RouterApp(){
           {/*<Route exact path="/profile" component={Profile} />*/}
           <Route exact path="/profile/:profileName" component={DynamicProfile} />
           <Route path="/profile/:profileName/edit" component={EditProfile} />
-
+          <Route path="/profile/:profileName/findGit" component={GitProjects} />
           <Route path="/project/:projectId" component={SavedProject} />
 
           <Route exact path="/search" component={SearchResults} />
