@@ -1,9 +1,14 @@
 from flask import Flask, request, jsonify
 from pathlib import Path
+from random import randint, randrange
 import json
 import requests
+import os
 
-DOWNLOAD_LOCATION = Path('../data')
+DOWNLOAD_LOCATION = "../data/"
+if not os.path.isdir(DOWNLOAD_LOCATION):
+    os.mkdir(DOWNLOAD_LOCATION)
+
 
 app = Flask(__name__)
 
@@ -18,27 +23,35 @@ def api():
 
 @app.route('/api/save-project', methods=["POST"])
 def save_project():
-    save_location = DOWNLOAD_LOCATION / 'projects/jsons'
+    save_location = DOWNLOAD_LOCATION + "projects/jsons/"
+    print(save_location)
+
+    # create directory if it doesn't exist
+    if not os.path.isdir(save_location):
+        os.makedirs(save_location)
+
     # Only values we are intersted in
     keys = ['name', 'description', 'sourceLink', 
         'imageUrls', 'videoUrl', 'code', 'language', 'username']
 
     input_json = request.get_json(force=True)
 
-    # ID is the biggest of current projects + 1
-    id = str(max(
-            [int(name.stem) for name in save_location.iterdir()]
-        ) + 1) + '.json'
+    # ID is a random 8 digit number
+    id = str(randint(10**7, (10**8)-1)) + '.json'
+
+    if not os.path.isdir(DOWNLOAD_LOCATION + "projects/imgs/"):
+        os.makedirs(DOWNLOAD_LOCATION + "projects/imgs/")
 
     for i, image_url in enumerate(input_json['imageUrls']):
         img_data = requests.get(image_url.replace('blob:', '')).content
-        metal_url = DOWNLOAD_LOCATION / f'projects/imgs/{id[:-5]}-{i}.jpeg'
+        metal_url = DOWNLOAD_LOCATION + str(f'projects/imgs/{id[:-5]}-{i}.jpeg')
+
         with open(metal_url, 
                 'wb') as handler:
             handler.write(img_data)
             input_json['imageUrls'][i] = str(metal_url) 
 
-    with open(save_location / id, 'w+') as f:
+    with open(os.path.join(save_location, id), 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}
         json.dump(dict_values, f)
 
@@ -56,7 +69,7 @@ def get_project():
     # ID is the number of current projects + 1
     id = input_json[key]
 
-    project_path = str(DOWNLOAD_LOCATION / 'projects/jsons' / f'{id}.json')
+    project_path = DOWNLOAD_LOCATION + "projects/jsons/" + str(f'{id}.json')
 
     values = None
     try:
@@ -81,7 +94,7 @@ def search_projects():
     # Get query string, turn it to lower case list of words
     query = input_json[key].lower().split(' ')
 
-    project_locations = DOWNLOAD_LOCATION / 'projects/jsons'
+    project_locations = DOWNLOAD_LOCATION + "projects/jsons/"
     project_dict = {}
     # Go through every project we have
     for project in project_locations.iterdir():
@@ -114,19 +127,23 @@ def search_projects():
    
 @app.route('/api/save-profile', methods=["POST"])
 def save_profile():
-    save_location = DOWNLOAD_LOCATION / 'profiles'
+    save_location = DOWNLOAD_LOCATION + 'profiles/'
+
+    if not os.path.isdir(save_location):
+        os.mkdir(save_location)
+
     # Only values we are intersted in
     keys = ['username', 'about', 'experience', 'education', 'email']
 
     input_json = request.get_json(force=True)
     # ID is the number of current projects + 1
-    id = input_json['username'] + '.json'
+    id = str(input_json['username']) + ".json"
 
     #for i, image_url in enumerate(input_json['imageUrls']):
     #    urllib.request.urlretrieve(image_url, 
     #        DOWNLOAD_LOCATION / f'projects/images/{id}-{i}.jpeg')
 
-    with open(save_location / id, 'w+') as f:
+    with open(os.path.join(save_location, id), 'w+') as f:
         dict_values = {k: input_json[k] for k in keys}
         json.dump(dict_values, f)
 
@@ -144,7 +161,7 @@ def get_profile():
     # ID is the number of current projects + 1
     username = input_json[key]
 
-    project_path = str(DOWNLOAD_LOCATION / 'profiles' / f'{username}.json')
+    project_path = str(DOWNLOAD_LOCATION) + "/profiles/" + str(f'{username}.json')
 
     values = None
     try:
