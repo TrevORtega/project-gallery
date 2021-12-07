@@ -100,7 +100,8 @@ def search_projects():
     project_locations = DOWNLOAD_LOCATION + "projects/jsons/"
     project_dict = {}
     # Go through every project we have
-    for project in project_locations.iterdir():
+    for project_name in os.listdir(project_locations):
+        project = os.path.join(project_locations, project_name)
         proj_json = json.load(open(project))
 
         # Only search name, description, and languages are searched 
@@ -120,7 +121,7 @@ def search_projects():
         # if project 3.json has 2 instances, we get the result:
         # {'3': 2}
         if total > 0:
-            project_dict[project.stem] = total
+            project_dict[project_name.split('.')[0]] = total
 
     # Return as json (don't change this)
     response = jsonify({'projects': project_dict})
