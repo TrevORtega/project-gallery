@@ -63,12 +63,14 @@ const StyledProfile = styled.div`
 
 `;
 
+// Styling for the option buttons on the bottom of page
 const ButtonContainer = styled(Stack)`
     margin-top: 2vh;
     display: flex;
     justify-content: center;
 `;
 
+// Give buttons some space on the left and right
 const StyledButton = styled(Button)`
     margin: 0 0 5px 5px;
 `;
@@ -125,6 +127,12 @@ const ProfileContent = ({ profileData, setModalMode }) => {
     const [cookies, setCookies] = useCookies();
     const profileName = profileData.username;
     const username = cookies.username; 
+
+    /*
+        Profile data gets loaded into a Profile component. We only show editing options
+        if the user is logged into an account with the same name as the profile name in 
+        the profile data.
+    */
     return (
         <ContentContainer>
             <StyledProfile>
@@ -155,6 +163,12 @@ const ProfileContent = ({ profileData, setModalMode }) => {
 export const MainProfilePage = ({ profileData }) => {
     const [modalMode, setModalMode] = useState(false);
 
+    /*
+        We show the profile unless the 'New Project' button is selected. In which
+        case we enter the project submission portal (modalMode). This is a little 
+        inconsistent since we redirect to other pages for all other editing options
+        (SubmissionModal was made before backend api was finished).
+    */
     return (
         <MainContainer>
             <Row>
@@ -173,6 +187,12 @@ export const DynamicProfile = () => {
 
     LoadProfile({username: profileName, setData});
     
+    /*
+        Case 1: Currentling loading profile from api (data is null) -> Show Loading component
+        Case 2: Error in loading profile (doesn't exist) -> 
+            allow user to create / edit their profile or if it's a random profile show profile doesn't exist
+        Case 3: Profile loaded -> Show Profile
+    */
     let Display = null;
     if (data) {
         if ('ERR' in data || 'error' in data ) {

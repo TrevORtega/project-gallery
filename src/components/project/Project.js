@@ -8,6 +8,7 @@ import { ContentContainer, MainContainer } from "../theme/mainTheme";
 
 import { SaveProject, FileListToUrlList, FileToUrl, LoadProject } from "./ProjectApi";
 
+// Description section which can be closed on click (accordian style)
 const DescriptionAccordion = ({description}) => {
     return (
         <Accordion defaultActiveKey="0">
@@ -21,7 +22,8 @@ const DescriptionAccordion = ({description}) => {
     );
 }
 
-const ImageAccordianWithDemo = ({imageUrls, videoUrl=null}) => {
+// Compenent to cycle through all imageUrlsl and videoUrls
+const ImageCaroselWithDemo = ({imageUrls, videoUrl=null}) => {
     const [index, setIndex] = useState(0);
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -63,6 +65,7 @@ const ImageAccordianWithDemo = ({imageUrls, videoUrl=null}) => {
     );
 }
 
+// Code snippets
 const SnippetBlocks = ({code, language}) => {
     return (
         <Row>
@@ -83,6 +86,7 @@ const StyledSnippetBlocks = styled(SnippetBlocks)`
     overflow-x: scroll;
 `;
 
+// Actual content of full sized project
 export const Project = ({ modalValues }) => {
     const { 
         name, 
@@ -116,6 +120,9 @@ export const Project = ({ modalValues }) => {
     );
 }
 
+// Shows preview for created project via modalValues. 
+// pages Component Array (from SubmissionModal) allows users to go back and edit things if 
+// they don't like the preview 
 export const NewProject = ({ pages, modalValues, setModalValues }) => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [goBack, setGoBack] = useState(false);
@@ -160,6 +167,7 @@ export const NewProject = ({ pages, modalValues, setModalValues }) => {
     );
 } 
 
+// Loads project in the full sized format for direct URL access
 export const SavedProject = () => {
     const [data, setData] = useState(null);
     const { projectId } = useParams();
@@ -194,6 +202,7 @@ export const SavedProject = () => {
     );
 }
 
+// Loads a project in the "small" format for search results and profile pages
 export const SavedProjectSmall = ({ id }) => {
     const [data, setData] = useState(null);
     LoadProject({id, setData});

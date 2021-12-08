@@ -13,13 +13,21 @@ if not os.path.isdir(DOWNLOAD_LOCATION):
 app = Flask(__name__)
 
 documentation = {
-    'save-project': 'Takes in project details defined in SubmissionModal and saves to file'
+    'save-project': 'Takes in project details (json) defined in SubmissionModal and saves to file with random ID',
+    'load-project': 'Takes in a project id and returns the json file for that project',
+    'search-projects': '''Takes in a string of query terms (spaced) and returns all projects that
+        have one of the query terms in their name, description, or language fields. Uses a very naive 
+        search on all projects. Should be updated ASAP.''',
+    'search-projects-profile': 'Takes in a profile name and returns all projects made with that profile name',
+    'save-profile': 'Takes in profile details (json) defined in the Profile Compent in Profile.js and saves to file with username as file name',
+    'load-profile': 'Given a profile name, returns the json file with the given name',
+    'NOTE': '***load type api routes return {\'error\': \'[error message]\'} on failure'
 }
 
 
 @app.route('/api/')
 def api():
-    return '\n'.join(f'{k}: {v}' for k, v in documentation.items())
+    return '<br><br>'.join(f'{k}: {v}' for k, v in documentation.items())
 
 @app.route('/api/save-project', methods=["POST"])
 def save_project():

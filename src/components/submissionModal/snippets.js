@@ -113,6 +113,7 @@ const SnippetRow = ({i, snippetValues, setSnippetValues}) => {
     );
 }
 
+// Submission component to get project code snippets from users
 export const Snippets = ({pages, modalValues, setModalValues}) => {
     const [snippetValues, setSnippetValues] = useState({
         code: modalValues.code,

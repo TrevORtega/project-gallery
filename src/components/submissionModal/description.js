@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-
+// Submission modal component to get the name, description, and source code link to project
 export const Description = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
         name: modalValues.name,

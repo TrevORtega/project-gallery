@@ -26,7 +26,9 @@ const StyledContentContainer = styled(ContentContainer)`
     overflow-y: scroll;
 `;
 
-export const SubmissionModal = ({ name, description, sourceLink,imageUrls, videoUrl, code, language }) => {
+// Cycles through the creation components (pages) maintaining consistant modalValues
+// Currently to create new projects with pages: description.js, snippets.js, visuals.js
+export const SubmissionModal = ({ name, description, sourceLink, imageUrls, videoUrl, code, language }) => {
     const values = 
         {
             name: name || '',

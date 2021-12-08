@@ -1,20 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Stack, Row, Col } from "react-bootstrap"
 
-const fileListHasImageFiles = (fileList) => {
-    return (fileList?.length > 0 &&  
-        Array.from(fileList)?.map(x => x.name.toLowerCase())
-            .reduce(x => {
-                return (
-                    x.endsWith('jpg') 
-                    || x.endsWith('png')
-                    || x.endsWith('jpeg')
-                );
-            }).length > 0
-    )
-}
-
-
+// File upload section. Accepts multiple jpeg/png images and/or a mp4 video
 export const Visuals = ({ pages, modalValues, setModalValues }) => {
     const [formValues, setFormValues] = useState({
         ...modalValues
@@ -24,7 +11,6 @@ export const Visuals = ({ pages, modalValues, setModalValues }) => {
 
     const validScreenshots = formValues.imageUrls.length > 0;
     
-    // Video should be an mp4 file
     const validVideo = formValues.videoUrl !== null;
     const validSubmit = validScreenshots || validVideo;
 

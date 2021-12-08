@@ -50,7 +50,7 @@ export const SearchResultsProfileProjects = (username) => {
     )
 }
 
-
+// API call to search routes in backend. Gives results to setResults function
 const SearchFiles = (query, setResults, url='http://localhost:1111/api/search-projects') => {
     useEffect(() => {
         loadFromApi();

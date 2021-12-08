@@ -14,7 +14,12 @@ export const EditProfile = () => {
     const [data, setData] = useState(null);
     const { profileName } = useParams();
     LoadProfile({username: profileName, setData});
-    
+
+    /*
+        Case 1: Currentling loading profile from api (data is null) -> Show Loading component
+        Case 2: Error in loading profile (doesn't exist) -> show editing form with empty strings 
+        Case 3: Profile loaded -> Show editing form with current profile data
+    */
     let Display = null;
     if (data) {
         if ('ERR' in data || 'error' in data){
@@ -54,6 +59,13 @@ const EditProfileForm = ({ defaults }) => {
     if (isSubmitted)
         return <SaveProfile profileData={profileData} />;
 
+
+    /*
+        All changes get saved into profileData via a custom changeHandler for that form.
+        On submit, all current data in profileData gets given to saveProfile to be sent to 
+        be saved to file
+    */
+    
     return ( 
         <ContentContainer>
             <MainContainer fluid={true}>

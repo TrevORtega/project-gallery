@@ -24,6 +24,8 @@ const StyledContentContainer = styled(ContentContainer)`
     justify-content: center;
 `;
 
+// Login is faked but should be straight forward to actually implement.
+// Username and email are stored only in cookies. Password is thrown away
 export const Login = () => {
     const [cookies, setCookies, removeCookie] = useCookies();
     const [formOptions, setFormOptions] = useState({
