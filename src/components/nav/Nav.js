@@ -26,7 +26,9 @@ export const DefaultNav = () => {
     const profile = cookies?.username;
     const logOut = () => {
         removeCookie('username', { path: '/'});
-        removeCookie('email', { path: '/' })
+        removeCookie('email', { path: '/' });
+        removeCookie('isRecruiter', { path: '/' });
+        window.location.href = '/';
     }
     return (
         <StyledNavbar bg="primary" variant="dark" sticky='top'>
