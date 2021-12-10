@@ -64,8 +64,8 @@ const CodeForm = ({snippetValues, setSnippetValues, i}) => {
                 rows={5} 
                 onChange={onChange}
                 value={code}
-                
-            />
+            >
+            </Form.Control>
         </Form.Group>
     );
 }

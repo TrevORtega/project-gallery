@@ -56,6 +56,7 @@ const ImageCaroselWithDemo = ({imageUrls, videoUrl=null}) => {
                         type="video/mp4"
                         alt="Video Screenshot"
                         src={videoUrl}
+                        controls={true}
                     />
                 </Carousel.Item>
 
@@ -108,7 +109,7 @@ export const Project = ({ modalValues }) => {
                 description={description}
             /> 
             <a href={sourceLink}>{sourceLink}</a>
-            <ImageAccordianWithDemo 
+            <ImageCaroselWithDemo 
                 imageUrls={activeImageUrls}
                 videoUrl={activeVideoUrl}
             />

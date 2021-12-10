@@ -82,7 +82,7 @@ const pStyles = {
     'paddingBottom': '40px'
 };
 
-const Profile = ({ username, about, experience, education, github=''}) => {
+const Profile = ({ username, about, experience, education, showDetails=false, github=''}) => {
     const [profile, setUseProfile] = useState({
         username,
         about,
@@ -99,22 +99,28 @@ const Profile = ({ username, about, experience, education, github=''}) => {
                 </div>
                 <div class="thumb">
                     <img src = {stock} height = "200" width = "200" class = "rounded-corners"  alt="default avatar" />
-                    <a className="git" href={`https://github.com/${profile.github}`}>{`Github: ${profile.github}`}</a>
+                    <a className="git" href={`https://github.com/${profile.github}`}>
+                        {profile.github ? `Github: ${profile.github}` : ''}
+                    </a>
                 </div>
             </div>
-            <h2>About</h2>
-            <div class="container" className="w-50">
-                <p style={pStyles}>{profile.about}</p>
-            </div>
-            
-            <h2>Experience</h2>
-            <div class="container" className="w-50">
-                <p style={pStyles}>{profile.experience}</p>
-            </div>
-            <h2>Education</h2>
-            <div class="container" className="w-50">
-                <p style={pStyles}>{profile.education}</p>
-            </div>
+            {showDetails ? (
+                <>
+                    <h2>About</h2>
+                    <div class="container" className="w-50">
+                        <p style={pStyles}>{profile.about}</p>
+                    </div>
+                    
+                    <h2>Experience</h2>
+                    <div class="container" className="w-50">
+                        <p style={pStyles}>{profile.experience}</p>
+                    </div>
+                    <h2>Education</h2>
+                    <div class="container" className="w-50">
+                        <p style={pStyles}>{profile.education}</p>
+                    </div>
+                </>
+            ) : null}
             <h2>Projects</h2>
             <div className="projContainer">
                 <SearchResultsProfileProjects username={username} />
@@ -127,7 +133,10 @@ const ProfileContent = ({ profileData, setModalMode }) => {
     const [cookies, setCookies] = useCookies();
     const profileName = profileData.username;
     const username = cookies.username; 
+    const isRecruiter = cookies.isRecruiter;
 
+    const profileIsCurUser = username === profileName;
+    const showDetails = profileIsCurUser || isRecruiter; 
     /*
         Profile data gets loaded into a Profile component. We only show editing options
         if the user is logged into an account with the same name as the profile name in 
@@ -136,8 +145,8 @@ const ProfileContent = ({ profileData, setModalMode }) => {
     return (
         <ContentContainer>
             <StyledProfile>
-                <Profile {...profileData} />    
-                {username === profileName ? 
+                <Profile {...profileData} showDetails={showDetails} />    
+                {profileIsCurUser ? 
                     (
                         <ButtonContainer direction="horizontal">
                             <StyledButton size='sm' variant='outline-light' onClick={() => setModalMode(true)}>
