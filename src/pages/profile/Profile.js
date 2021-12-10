@@ -136,7 +136,7 @@ const ProfileContent = ({ profileData, setModalMode }) => {
     const isRecruiter = cookies.isRecruiter;
 
     const profileIsCurUser = username === profileName;
-    const showDetails = profileIsCurUser || isRecruiter; 
+    const showDetails = true;//profileIsCurUser || isRecruiter; 
     /*
         Profile data gets loaded into a Profile component. We only show editing options
         if the user is logged into an account with the same name as the profile name in 
